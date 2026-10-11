@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Knuddelbär</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Knuddelbär">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#e8577a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700&display=swap">
+<style>
+/* Layout: one screen, bear centred on a soft "blanket" stage, big round button beneath */
+:root {
+  --bg: #e8eef8;
+  --bg-2: #d5e0f2;
+  --fg: #2d3550;
+  --muted: #5f6a88;
+  --fur: #b97a45;
+  --fur-dark: #8f5a2f;
+  --fur-light: #e2b98a;
+  --nose: #3a2418;
+  --blush: #f29aa6;
+  --accent: #e8577a;
+  --accent-ink: #ffffff;
+  --bubble: #ffffff;
+  --display: "Fredoka", "Nunito", system-ui, sans-serif;
+  --body: "Nunito", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b2034; --bg-2: #262d48; --fg: #eef0fa; --muted: #a9b0cc;
+    --fur: #b97a45; --fur-dark: #8a552b; --fur-light: #dcb184; --nose: #2a1a10;
+    --blush: #f08a99; --accent: #f06a8b; --accent-ink: #1b2034; --bubble: #323a5a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b2034; --bg-2: #262d48; --fg: #eef0fa; --muted: #a9b0cc;
+  --fur: #b97a45; --fur-dark: #8a552b; --fur-light: #dcb184; --nose: #2a1a10;
+  --blush: #f08a99; --accent: #f06a8b; --accent-ink: #1b2034; --bubble: #323a5a;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: radial-gradient(120% 80% at 50% 30%, var(--bg-2), var(--bg) 70%);
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  padding-inline: 16px;
+  overflow-x: hidden;
+}
+main {
+  min-height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; padding-block: 24px;
+  text-align: center;
+}
+h1 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0; letter-spacing: .01em;
+  text-wrap: balance;
+}
+.stage { position: relative; width: min(340px, 86vw); aspect-ratio: 300 / 330; max-width: 100%; }
+.stage svg { width: 100%; height: 100%; overflow: visible; display: block; }
+
+.bubble {
+  position: absolute; top: -6px; left: 50%; transform: translate(-50%, 10px) scale(.8);
+  background: var(--bubble); color: var(--fg);
+  font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+  padding: 8px 16px; border-radius: 999px; white-space: nowrap;
+  box-shadow: 0 6px 18px rgb(0 0 0 / .12);
+  opacity: 0; transition: opacity .25s, transform .35s cubic-bezier(.3,1.6,.5,1);
+  pointer-events: none; z-index: 3;
+}
+.bubble.show { opacity: 1; transform: translate(-50%, -18px) scale(1); }
+
+/* Bear parts */
+#bear { transform-box: view-box; transform-origin: 150px 300px; transition: transform .5s cubic-bezier(.3,1.5,.5,1); }
+.arm { transform-box: view-box; transition: transform .45s cubic-bezier(.3,1.4,.5,1); }
+#armL { transform-origin: 98px 188px; }
+#armR { transform-origin: 202px 188px; }
+.eye-open { transition: opacity .15s; }
+.eye-happy { opacity: 0; transition: opacity .15s; }
+.blush { opacity: .45; transition: opacity .3s; }
+#head { transform-box: view-box; transform-origin: 150px 150px; transition: transform .5s cubic-bezier(.3,1.5,.5,1); }
+
+.hugging #bear { transform: scale(1.1) translateY(-4px); }
+.hugging #armL { transform: rotate(-78deg); }
+.hugging #armR { transform: rotate(78deg); }
+.hugging .eye-open { opacity: 0; }
+.hugging .eye-happy { opacity: 1; }
+.hugging .blush { opacity: 1; }
+.hugging #head { transform: rotate(-6deg); }
+
+.idle #bear { animation: breathe 3.6s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.015) translateY(-2px); } }
+
+.heart {
+  position: absolute; pointer-events: none; z-index: 2;
+  color: var(--accent); font-size: 26px; line-height: 1;
+  animation: float 1.6s ease-out forwards;
+}
+@keyframes float {
+  0%   { opacity: 0; transform: translate(0,0) scale(.4); }
+  15%  { opacity: 1; transform: translate(0,-10px) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx), -160px) scale(.9) rotate(var(--rot)); }
+}
+
+button#hug {
+  font-family: var(--display); font-weight: 700; font-size: 1.35rem;
+  color: var(--accent-ink); background: var(--accent);
+  border: none; border-radius: 999px; padding: 16px 40px; cursor: pointer;
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 65%, #000), 0 12px 24px rgb(0 0 0 / .15);
+  transition: transform .1s, box-shadow .1s;
+  -webkit-tap-highlight-color: transparent;
+}
+button#hug:hover { transform: translateY(-1px); }
+button#hug:active { transform: translateY(5px); box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 65%, #000), 0 4px 10px rgb(0 0 0 / .15); }
+button#hug:focus-visible { outline: 3px solid var(--fg); outline-offset: 4px; }
+.count { color: var(--muted); font-size: .95rem; min-height: 1.3em; margin: 0; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  #bear, .arm, #head, .bubble { transition-duration: .01s; }
+  .idle #bear { animation: none; }
+  .heart { animation-duration: .01s; }
+}
+</style>
+
+</head>
+<body>
+<main>
+  <h1>Knuddelbär</h1>
+  <div class="stage idle" id="stage">
+    <div class="bubble" id="bubble">Hab dich lieb!</div>
+    <svg viewBox="0 0 300 330" role="img" aria-label="Ein großer, kuscheliger Teddybär">
+      <g id="bear">
+        <!-- shadow -->
+        <ellipse cx="150" cy="318" rx="95" ry="10" fill="var(--fg)" opacity=".08"/>
+        <!-- legs -->
+        <ellipse cx="108" cy="292" rx="34" ry="26" fill="var(--fur)"/>
+        <ellipse cx="192" cy="292" rx="34" ry="26" fill="var(--fur)"/>
+        <ellipse cx="104" cy="298" rx="18" ry="14" fill="var(--fur-light)"/>
+        <ellipse cx="196" cy="298" rx="18" ry="14" fill="var(--fur-light)"/>
+        <!-- body -->
+        <ellipse cx="150" cy="232" rx="78" ry="74" fill="var(--fur)"/>
+        <ellipse cx="150" cy="242" rx="50" ry="50" fill="var(--fur-light)"/>
+        <path d="M150 226 c-6 -10 -22 -6 -18 6 c3 8 18 16 18 16 s15 -8 18 -16 c4 -12 -12 -16 -18 -6z" fill="var(--blush)" opacity=".7"/>
+        <!-- head -->
+        <g id="head">
+          <circle cx="86" cy="80" r="28" fill="var(--fur)"/>
+          <circle cx="214" cy="80" r="28" fill="var(--fur)"/>
+          <circle cx="86" cy="80" r="15" fill="var(--fur-light)"/>
+          <circle cx="214" cy="80" r="15" fill="var(--fur-light)"/>
+          <circle cx="150" cy="128" r="72" fill="var(--fur)"/>
+          <ellipse cx="150" cy="150" rx="34" ry="27" fill="var(--fur-light)"/>
+          <ellipse cx="150" cy="138" rx="12" ry="8.5" fill="var(--nose)"/>
+          <ellipse cx="146" cy="135" rx="3.5" ry="2" fill="#fff" opacity=".5"/>
+          <path d="M150 146 v8 M150 154 q-9 9 -16 2 M150 154 q9 9 16 2" stroke="var(--nose)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <g class="eye-open">
+            <circle cx="122" cy="116" r="7" fill="var(--nose)"/>
+            <circle cx="178" cy="116" r="7" fill="var(--nose)"/>
+            <circle cx="124.5" cy="113.5" r="2.4" fill="#fff"/>
+            <circle cx="180.5" cy="113.5" r="2.4" fill="#fff"/>
+          </g>
+          <g class="eye-happy" stroke="var(--nose)" stroke-width="4" fill="none" stroke-linecap="round">
+            <path d="M113 119 q9 -11 18 0"/>
+            <path d="M169 119 q9 -11 18 0"/>
+          </g>
+          <ellipse class="blush" cx="108" cy="140" rx="11" ry="7" fill="var(--blush)"/>
+          <ellipse class="blush" cx="192" cy="140" rx="11" ry="7" fill="var(--blush)"/>
+        </g>
+        <!-- arms (drawn last so they wrap in front when hugging) -->
+        <g class="arm" id="armL">
+          <rect x="72" y="178" width="50" height="96" rx="25" fill="var(--fur-dark)"/>
+          <ellipse cx="97" cy="258" rx="16" ry="12" fill="var(--fur-light)" opacity=".9"/>
+        </g>
+        <g class="arm" id="armR">
+          <rect x="178" y="178" width="50" height="96" rx="25" fill="var(--fur-dark)"/>
+          <ellipse cx="203" cy="258" rx="16" ry="12" fill="var(--fur-light)" opacity=".9"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <button id="hug" type="button">Knuddel mich</button>
+  <p class="count" id="count" aria-live="polite"></p>
+</main>
+
+<script>
+(function () {
+  const stage = document.getElementById('stage');
+  const btn = document.getElementById('hug');
+  const bubble = document.getElementById('bubble');
+  const count = document.getElementById('count');
+  const phrases = ['Hab dich lieb!', 'Mmmh, kuschelig!', 'Ganz fest gedrückt!', 'Brummm ♥', 'Noch einmal?', 'Du bist toll!', 'Bärenstark!'];
+  let n = 0, timer = null, last = -1;
+
+  function hearts() {
+    const r = stage.getBoundingClientRect();
+    for (let i = 0; i < 7; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = '♥';
+      h.style.left = (r.width * (0.3 + Math.random() * 0.4)) + 'px';
+      h.style.top = (r.height * (0.45 + Math.random() * 0.2)) + 'px';
+      h.style.fontSize = (18 + Math.random() * 18) + 'px';
+      h.style.setProperty('--dx', ((Math.random() - 0.5) * 160) + 'px');
+      h.style.setProperty('--rot', ((Math.random() - 0.5) * 50) + 'deg');
+      h.style.animationDelay = (i * 0.08) + 's';
+      stage.appendChild(h);
+      h.addEventListener('animationend', () => h.remove());
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    n++;
+    let i; do { i = Math.floor(Math.random() * phrases.length); } while (i === last && phrases.length > 1);
+    last = i;
+    bubble.textContent = phrases[i];
+    stage.classList.remove('idle');
+    stage.classList.add('hugging');
+    bubble.classList.add('show');
+    hearts();
+    count.textContent = n === 1 ? '1 Knuddler' : n + ' Knuddler';
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      stage.classList.remove('hugging');
+      stage.classList.add('idle');
+      bubble.classList.remove('show');
+    }, 1600);
+  });
+})();
+</script>
+</body>
+
+</html>

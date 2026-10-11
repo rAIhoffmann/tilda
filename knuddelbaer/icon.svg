@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="75%">
+      <stop offset="0" stop-color="#f59ab0"/>
+      <stop offset="1" stop-color="#e8577a"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <!-- hearts -->
+  <path d="M420 92 c-8 -14 -30 -8 -25 8 c4 11 25 22 25 22 s21 -11 25 -22 c5 -16 -17 -22 -25 -8z" fill="#fff" opacity=".85"/>
+  <path d="M92 400 c-6 -10 -21 -6 -18 6 c3 8 18 15 18 15 s15 -7 18 -15 c3 -12 -12 -16 -18 -6z" fill="#fff" opacity=".6"/>
+  <!-- ears -->
+  <circle cx="150" cy="150" r="62" fill="#b97a45"/>
+  <circle cx="362" cy="150" r="62" fill="#b97a45"/>
+  <circle cx="150" cy="150" r="34" fill="#e2b98a"/>
+  <circle cx="362" cy="150" r="34" fill="#e2b98a"/>
+  <!-- head -->
+  <circle cx="256" cy="282" r="166" fill="#b97a45"/>
+  <!-- muzzle -->
+  <ellipse cx="256" cy="336" rx="80" ry="62" fill="#e2b98a"/>
+  <ellipse cx="256" cy="308" rx="28" ry="20" fill="#3a2418"/>
+  <ellipse cx="247" cy="301" rx="8" ry="5" fill="#fff" opacity=".5"/>
+  <path d="M256 328 v16 M256 344 q-20 20 -36 4 M256 344 q20 20 36 4" stroke="#3a2418" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- happy closed eyes -->
+  <g stroke="#3a2418" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M176 262 q22 -26 44 0"/>
+    <path d="M292 262 q22 -26 44 0"/>
+  </g>
+  <!-- cheeks -->
+  <ellipse cx="166" cy="312" rx="26" ry="16" fill="#f29aa6"/>
+  <ellipse cx="346" cy="312" rx="26" ry="16" fill="#f29aa6"/>
+</svg>
