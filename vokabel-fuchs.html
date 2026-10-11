@@ -1,0 +1,780 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Vokabeln">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head><body><title>Vokabel-Fuchs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Lexend:wght@400;500;600&display=swap">
+<style>
+/* Layout: one phone-width column on squared exercise-book paper (light) or a chalkboard (dark); highlighter strokes mark what matters. */
+:root{
+  --paper:#F2F7FC; --grid:rgba(52,104,170,.11); --card:#FFFFFF; --ink:#1E2B57; --ink-soft:#5B6791; --line:rgba(30,43,87,.14);
+  --hl:#FFE14D; --on-hl:#1E2B57; --pink:#F2416F; --green:#119E62; --blue:#3770F0; --orange:#F27A1A;
+  --good-bg:#DDF6E9; --bad-bg:#FFE3EA; --shadow:0 2px 0 rgba(30,43,87,.16); --hl-mark:#FFE14D; --on-accent:#FFFFFF;
+  --f-display:"Grandstander","Comic Sans MS","Chalkboard SE",ui-rounded,system-ui,sans-serif;
+  --f-body:"Lexend",ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#1C2B29; --grid:rgba(255,255,255,.045); --card:#253936; --ink:#EEF3EC; --ink-soft:#A8BAB2; --line:rgba(255,255,255,.13);
+  --hl:#FFE14D; --on-hl:#1E2B57; --pink:#FF7B9F; --green:#52D69C; --blue:#86A9FF; --orange:#FFA05C;
+  --good-bg:#1F4A3A; --bad-bg:#4D2733; --shadow:0 2px 0 rgba(0,0,0,.35); --hl-mark:rgba(255,225,77,.38); --on-accent:#10241D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#1C2B29; --grid:rgba(255,255,255,.045); --card:#253936; --ink:#EEF3EC; --ink-soft:#A8BAB2; --line:rgba(255,255,255,.13);
+  --hl:#FFE14D; --on-hl:#1E2B57; --pink:#FF7B9F; --green:#52D69C; --blue:#86A9FF; --orange:#FFA05C;
+  --good-bg:#1F4A3A; --bad-bg:#4D2733; --shadow:0 2px 0 rgba(0,0,0,.35); --hl-mark:rgba(255,225,77,.38); --on-accent:#10241D; color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:14px 40px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--blue);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;margin:0;text-wrap:balance;line-height:1.1}
+.mark{background:linear-gradient(transparent 52%,var(--hl-mark) 52%,var(--hl-mark) 88%,transparent 88%);color:inherit;padding:0 .1em}
+:root .mark{-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.muted{color:var(--ink-soft)}
+.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ink-soft)}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:12px}
+.fox{width:64px;height:64px;flex:none}
+.fox.big{width:110px;height:110px}
+.hello{flex:1;min-width:0}
+.hello h1{font-size:28px}
+.bubble{position:relative;background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:8px 12px;font-size:14px;margin-top:6px;box-shadow:var(--shadow)}
+.iconbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--card);border:2px solid var(--line)}
+.iconbtn svg{width:22px;height:22px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 10px;text-align:left;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat b{font-family:var(--f-display);font-size:22px;font-variant-numeric:tabular-nums;line-height:1}
+.stat small{font-size:12px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xpbar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin-top:4px}
+.xpbar i{display:block;height:100%;background:var(--green);border-radius:8px;transition:width .5s}
+
+section.block{margin-top:22px}
+.block-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+.block-head h2{font-size:22px}
+.link{color:var(--blue);font-weight:600;font-size:14px;padding:4px}
+
+/* page picker */
+.pages{display:flex;flex-direction:column;gap:8px}
+.page{background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden}
+.page.on{border-color:var(--ink)}
+.page-row{display:flex;align-items:center;gap:12px;padding:10px 12px;width:100%;text-align:left}
+.pnum{flex:none;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:20px;background:var(--paper);border:2px dashed var(--line);font-variant-numeric:tabular-nums}
+.page.on .pnum{background:var(--hl);border:2px solid var(--ink);color:var(--on-hl)}
+.pinfo{flex:1;min-width:0}
+.pinfo strong{display:block;font-weight:600;line-height:1.25}
+.pinfo span{font-size:13px;color:var(--ink-soft)}
+.stars{display:flex;gap:1px;flex:none}
+.stars svg{width:18px;height:18px}
+.check{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--ink-soft);display:grid;place-items:center}
+.page.on .check{background:var(--green);border-color:var(--green)}
+.check svg{width:18px;height:18px;opacity:0}
+.page.on .check svg{opacity:1}
+.secs{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px 76px}
+.sec{font-size:13px;padding:5px 10px;border-radius:999px;border:2px solid var(--line);color:var(--ink-soft)}
+.sec.on{border-color:var(--ink);color:var(--ink);background:var(--paper)}
+.sec.on::before{content:"✓ ";font-weight:700;color:var(--green)}
+.more{font-size:12px;color:var(--blue);font-weight:600;padding:0 12px 10px 76px;text-align:left;display:block}
+
+/* modes */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:14px 12px 12px;text-align:left;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 0 var(--ink);transition:transform .08s}
+.mode:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.mode .mi{width:44px;height:44px;border-radius:12px;display:grid;place-items:center}
+.mode .mi svg{width:28px;height:28px}
+.mode h3{font-size:18px}
+.mode p{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.3}
+.opts{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px;align-items:center}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.seg button{padding:6px 11px;font-size:14px;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:14px}
+.toggle input{width:20px;height:20px;accent-color:var(--green)}
+.selinfo{font-size:14px;margin-top:10px}
+
+/* add page */
+.addbtn{margin-top:10px;width:100%;border:2px dashed var(--ink-soft);border-radius:16px;padding:14px;font-weight:600;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:8px;background:transparent}
+.addbtn span{font-family:var(--f-display);font-size:24px;line-height:1}
+.addpanel{margin-top:10px;background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.addpanel h3{font-size:20px}
+.addpanel p{margin:0;font-size:14px}
+.addpanel .small{font-size:12px}
+.filebtn{cursor:pointer}
+#addText{width:100%;font:14px/1.5 ui-monospace,Menlo,monospace;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical}
+.addstatus{font-size:14px;font-weight:500}
+.addstatus:empty{display:none}
+.addsum{font-size:14px;background:var(--paper);border-radius:12px;padding:8px 10px}
+.addsum:empty{display:none}
+#addSave:disabled{opacity:.45}
+.sec.del{border-color:var(--pink);color:var(--pink)}
+/* stickers */
+.stickers{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.stk{aspect-ratio:1;max-width:100%;border-radius:50%;display:grid;place-items:center;font-size:28px;border:2px dashed var(--line);background:var(--card);position:relative}
+.stk.got{border:3px solid var(--ink);box-shadow:var(--shadow);transform:rotate(var(--r,0deg))}
+.stk:not(.got) span{filter:grayscale(1);opacity:.25}
+.stk-name{font-size:12px;text-align:center;color:var(--ink-soft);line-height:1.15;margin-top:4px}
+.stk-cell{display:flex;flex-direction:column;align-items:center;min-width:0}
+
+/* play */
+.playbar{display:flex;align-items:center;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);padding-block:8px;z-index:5}
+.prog{flex:1;height:14px;border-radius:10px;background:var(--line);overflow:hidden;border:2px solid var(--ink)}
+.prog i{display:block;height:100%;background:var(--green);transition:width .3s}
+.combo{font-family:var(--f-display);font-weight:800;font-size:18px;min-width:56px;text-align:right;color:var(--orange);font-variant-numeric:tabular-nums}
+.combo.hot{animation:pop .35s}
+@keyframes pop{50%{transform:scale(1.35)}}
+.timer{font-family:var(--f-display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums;min-width:48px;text-align:right}
+.timer.low{color:var(--pink)}
+
+.stage{margin-top:14px;display:flex;flex-direction:column;gap:14px}
+.qcard{background:var(--card);border:2px solid var(--ink);border-radius:22px;padding:22px 18px;box-shadow:0 5px 0 var(--ink);min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px;text-align:center;position:relative}
+.qcard .label{position:absolute;top:12px;left:16px}
+.qcard .pg{position:absolute;top:12px;right:16px;font-size:12px;color:var(--ink-soft)}
+.word{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,8vw,38px);line-height:1.15;overflow-wrap:anywhere}
+.answer{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,7.5vw,34px);color:var(--blue);overflow-wrap:anywhere}
+.ex{font-size:15px;color:var(--ink-soft);margin:0}
+.ex em{font-style:normal;color:var(--ink)}
+.tip{font-size:13px;background:var(--paper);border-radius:12px;padding:8px 10px;text-align:left;border:1.5px dashed var(--line)}
+.speak{display:inline-flex;align-items:center;gap:6px;align-self:center;padding:6px 12px;border-radius:999px;border:2px solid var(--line);font-size:14px;font-weight:500}
+.speak svg{width:18px;height:18px}
+
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;transition:transform .45s;transform-style:preserve-3d;display:grid}
+.flip.turned .flip-in{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.back{transform:rotateY(180deg)}
+.taphint{font-size:13px;color:var(--ink-soft)}
+
+.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{border-radius:16px;padding:14px 12px;font-weight:600;font-size:17px;border:2px solid var(--ink);box-shadow:0 4px 0 var(--ink);background:var(--card);display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.btn.go{background:var(--green);color:var(--on-accent)}
+.btn.no{background:var(--pink);color:var(--on-accent)}
+.btn.hl{background:var(--hl);color:var(--on-hl)}
+.btn.wide{grid-column:1/-1}
+.btn.ghost{box-shadow:none;border-color:var(--line);font-weight:500;font-size:15px;padding:10px}
+
+.typein{width:100%;font:600 22px var(--f-body);padding:14px 14px;border-radius:16px;border:2px solid var(--ink);background:var(--card);color:var(--ink);text-align:center}
+.typein.ok{background:var(--good-bg);border-color:var(--green)}
+.typein.bad{background:var(--bad-bg);border-color:var(--pink);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.blanks{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.25em;color:var(--ink-soft);font-size:15px}
+.fb{border-radius:16px;padding:12px 14px;font-size:15px;display:flex;flex-direction:column;gap:6px}
+.fb.ok{background:var(--good-bg)}
+.fb.bad{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:20px}
+.fb .right{font-weight:600;font-size:18px}
+.fb s{opacity:.7}
+
+.choices{display:grid;grid-template-columns:1fr;gap:10px}
+.choice{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:14px;font-weight:600;font-size:18px;box-shadow:0 3px 0 var(--ink)}
+.choice.ok{background:var(--good-bg);border-color:var(--green)}
+.choice.bad{background:var(--bad-bg);border-color:var(--pink)}
+
+/* results */
+.result{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:10px}
+.result h2{font-size:34px}
+.bigstars{display:flex;gap:6px}
+.bigstars svg{width:56px;height:56px}
+.bigstars svg.on{animation:starin .5s backwards}
+.bigstars svg:nth-child(2){animation-delay:.15s}.bigstars svg:nth-child(3){animation-delay:.3s}
+@keyframes starin{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.25)}}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.misslist{width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:6px 14px}
+.misslist div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.misslist div:last-child{border:0}
+.misslist b{font-weight:600}
+.newstk{background:var(--hl);color:var(--on-hl);border:2px solid var(--ink);border-radius:16px;padding:10px 14px;font-weight:600;width:100%}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(120px);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:14px;font-weight:600;transition:transform .3s;z-index:30;max-width:calc(100% - 32px)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+.foot{margin-top:28px;font-size:12px;color:var(--ink-soft);text-align:center}
+.foot button{color:var(--ink-soft);text-decoration:underline;font-size:12px}
+
+/* fox moods */
+.fox .eye-o{display:none}
+.fox.happy .eye-n{display:none}.fox.happy .eye-o{display:inline}
+.fox .m-sad{display:none}
+.fox.sad .m-happy{display:none}.fox.sad .m-sad{display:inline}
+.fox.bounce{animation:bounce .5s}
+@keyframes bounce{40%{transform:translateY(-10px) rotate(-4deg)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:380px){.modes{gap:8px}.mode p{display:none}.stickers{grid-template-columns:repeat(4,1fr)}}
+</style>
+
+<div class="wrap">
+  <!-- HOME -->
+  <main id="home">
+    <div class="top">
+      <svg class="fox" id="fox-home" viewBox="0 0 100 100" aria-hidden="true"></svg>
+      <div class="hello">
+        <h1>Vokabel-<span class="mark">Fuchs</span></h1>
+        <div class="bubble" id="greet">Hi! Welche Seiten üben wir heute?</div>
+      </div>
+      <button class="iconbtn" id="soundBtn" aria-label="Ton an/aus"></button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="lvl">1</b><small id="lvlname">Neuling</small><div class="xpbar"><i id="xpfill" style="width:0"></i></div></div>
+      <div class="stat"><b id="xp">0</b><small>Punkte</small></div>
+      <div class="stat"><b id="streak">0</b><small id="streaklbl">Tage in Folge</small></div>
+    </div>
+
+    <section class="block">
+      <div class="block-head"><h2>1. Seiten <span class="mark">ankreuzen</span></h2><button class="link" id="allBtn">Alle</button></div>
+      <div class="pages" id="pages"></div>
+      <div class="selinfo" id="selinfo"></div>
+      <button class="addbtn" id="addOpen"><span>+</span> Neue Vokabelseite hinzufügen</button>
+      <div class="addpanel" id="addPanel" hidden>
+        <h3>Neue Seite <span class="mark">hinzufügen</span></h3>
+        <div id="photoBox" hidden>
+          <p class="muted">Fotografiere die Vokabelseite oder wähle ein Foto aus. Der Fuchs liest die Vokabeln aus. Handschrift wird ignoriert.</p>
+          <label class="btn hl filebtn" for="photoIn">Foto auswählen</label>
+          <input type="file" id="photoIn" accept="image/*" multiple hidden>
+          <div class="addstatus" id="addStatus" role="status"></div>
+        </div>
+        <p class="muted" id="noPhoto" hidden>Fotos auslesen geht nur, wenn die App in Claude geöffnet ist. Du kannst die Vokabeln aber hier eintippen oder einfügen.</p>
+        <label class="label" for="addText">Vokabeln prüfen und verbessern</label>
+        <textarea id="addText" rows="9" spellcheck="false" placeholder="# 178 | Seitentitel&#10;## Abschnitt&#10;english | deutsch | example sentence | Beispielsatz&#10;dog | Hund | Sherlock is a dog. | Sherlock ist ein Hund."></textarea>
+        <p class="muted small">Eine Vokabel pro Zeile: <b>englisch | deutsch | Beispielsatz | Übersetzung</b>. Satz und Übersetzung sind freiwillig. Die erste Zeile <b># Seitenzahl | Titel</b> beginnt eine Seite.</p>
+        <div class="addsum" id="addSum"></div>
+        <div class="btnrow"><button class="btn ghost" id="addCancel">Abbrechen</button><button class="btn go" id="addSave">Speichern</button></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head"><h2>2. Spiel <span class="mark">auswählen</span></h2></div>
+      <div class="modes">
+        <button class="mode" data-mode="cards"><span class="mi" style="background:var(--hl)"><svg viewBox="0 0 32 32" fill="none" stroke="#1E2B57" stroke-width="2.4" stroke-linejoin="round"><rect x="4" y="8" width="18" height="20" rx="3" fill="#fff"/><rect x="10" y="4" width="18" height="20" rx="3" fill="#fff"/><path d="M15 14h8M15 18h5"/></svg></span><h3>Karteikarten</h3><p>Deutsch sehen, Englisch denken, umdrehen.</p></button>
+        <button class="mode" data-mode="type"><span class="mi" style="background:#BFE8FF"><svg viewBox="0 0 32 32" fill="none" stroke="#1E2B57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26l4-1 15-15-3-3L7 22z" fill="#fff"/><path d="M19 10l3 3"/><path d="M6 29h20"/></svg></span><h3>Schreiben</h3><p>Das englische Wort selbst eintippen.</p></button>
+        <button class="mode" data-mode="sent"><span class="mi" style="background:#FFD0DD"><svg viewBox="0 0 32 32" fill="none" stroke="#1E2B57" stroke-width="2.4" stroke-linejoin="round"><path d="M4 7h16v11H11l-5 4v-4H4z" fill="#fff"/><path d="M14 14h14v10h-2v4l-5-4h-7z" fill="#fff"/></svg></span><h3>Sätze</h3><p>Beispielsätze ins Deutsche übersetzen.</p></button>
+        <button class="mode" data-mode="blitz"><span class="mi" style="background:#C9F2D9"><svg viewBox="0 0 32 32" fill="#FFE14D" stroke="#1E2B57" stroke-width="2.4" stroke-linejoin="round"><path d="M18 3L7 18h8l-2 11 12-16h-8z"/></svg></span><h3>Blitz-Runde</h3><p>60 Sekunden. Knackst du deinen Rekord?</p></button>
+      </div>
+      <div class="opts">
+        <span class="label">Wörter</span>
+        <div class="seg" id="sizeSeg"><button data-size="10">10</button><button data-size="20">20</button><button data-size="0">Alle</button></div>
+        <label class="toggle"><input type="checkbox" id="hardOnly"> nur Wackel-Wörter</label>
+        <label class="toggle"><input type="checkbox" id="reverse"> Englisch → Deutsch (Karteikarten)</label>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head"><h2>Sticker-<span class="mark">Album</span></h2><span class="muted" id="stkcount"></span></div>
+      <div class="stickers" id="stickers"></div>
+    </section>
+
+    <div class="foot" id="foot"></div>
+  </main>
+
+  <!-- PLAY -->
+  <main id="play" hidden>
+    <div class="playbar">
+      <button class="iconbtn" id="quitBtn" aria-label="Runde beenden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="prog"><i id="progfill"></i></div>
+      <div class="combo" id="combo"></div>
+    </div>
+    <div class="stage" id="stage"></div>
+  </main>
+
+  <!-- RESULT -->
+  <main id="result" hidden></main>
+</div>
+<canvas id="fx"></canvas>
+<div class="toast" id="toast"></div>
+
+<script>
+const RAW = "# 170 | Hello!\n## Hello!\nHello. | Hallo. | Hello Linus. | Hallo Linus.\nMy name is … | Ich heiße … | My name is Tom. | Ich heiße Tom.\nto be | sein | I am, you are, he/she/it is, … | ich bin, du bist, er/sie/es ist, …\nWhat's your name? | Wie heißt du?; Wie heißen Sie? | What's your name? – My name is Tom. | Wie heißt du? – Ich heiße Tom.\nHi. | Hi.; Hallo. | Hi Alina! – Hello Linus! | Hi Alina! – Hallo Linus!\nI'm … | Ich bin … | | | Mit Abkürzungen klingt dein Englisch besser: I'm (I am), What's (What is).\nWhere are you from? | Woher kommst du/kommt ihr/kommen Sie? | | | Achte beim Sprechen auf die Verbindung zwischen den Wörtern.\nI'm from … | Ich bin aus … | Where are you from? – I'm from Freiburg. | Woher kommst du? – Ich bin aus Freiburg.\nbut | aber | I'm from Freiburg, but you are from Mannheim. | Ich bin aus Freiburg, aber du bist aus Mannheim.\nI live in … | Ich wohne in … | I'm from Berlin, but I live in Stuttgart. | Ich bin aus Berlin, aber ich wohne in Stuttgart.\nto live | wohnen; leben | I live in Reutlingen. | Ich wohne in Reutlingen.\nHow old are you? | Wie alt bist du?; Wie alt sind Sie? | How old are you? – I'm ten. | Wie alt bist du? – Ich bin zehn.\nMe too. | Ich auch. | I'm from Berlin. – Me too. | Ich bin aus Berlin. – Ich auch.\nSee you! | Bis dann!; Bis … | See you in Berlin! | Bis dann in Berlin!\nto see | sehen | See you! | Bis dann!\nBye! | Tschüss! | | | Bye! ↔ Hello!\nnew | neu | I'm new in Stuttgart. | Ich bin neu in Stuttgart.\nfriend | Freund/-in | Sherlock is my new friend. | Sherlock ist mein neuer Freund.\n## Rap: Nice to meet you\nNice to meet you. | Nett, dich/euch kennenzulernen.\nYou like to rap? | Willst du/Wollt ihr rappen?\nI'm the same. | Mir geht's genauso.\nListen to the beat. | Hör dem Rhythmus zu.\nLet's have some fun. | Lass(t) uns Spaß haben.\nCome with me. | Komm(t) mit.\nHow are you? | Wie geht es dir/euch?\nLet's be friends. | Lasst uns Freunde sein.\nIt's time for fun. | Es ist Zeit für Spaß.\nFun never ends. | Der Spaß hört nie auf.\nWe all like raps. | Wir alle mögen Raps.\nWe all can dance. | Wir alle können tanzen.\nThis is cool. | Das ist cool.\nYou live near me. | Du wohnst/Ihr wohnt in meiner Nähe.\nYou go to my school. | Du gehst/Ihr geht in meine Schule.\nYou can speak English. | Du sprichst/Ihr sprecht Englisch.\nI can too. | Ich kann das auch.\nLovely this weather! | Toll dieses Wetter!\nIt's time to make friends and rap together. | Es ist Zeit, Freundschaften zu schließen und miteinander zu rappen.\nClap your hands. | Klatsch(t) in die Hände.\nTap your feet. | Stampf(t) mit den Füßen.\nCome and join me. | Komm(t), mach(t) mit.\nFeel the beat. | Fühl(t) den Rhythmus.\n# 171 | One world, many languages\n## Languages\nAlbanian | Albanisch\nArabic | Arabisch\nBosnian | Bosnisch\nBulgarian | Bulgarisch\nCroatian | Kroatisch\nCzech | Tschechisch\nDanish | Dänisch\nDutch | Niederländisch\nEnglish | Englisch\nFinnish | Finnisch\nFrench | Französisch\nGerman | Deutsch\nGreek | Griechisch\nHindi | Hindi\nHungarian | Ungarisch\nItalian | Italienisch\nJapanese | Japanisch\nKurdish | Kurdisch\nMandarin Chinese | Mandarin (chinesische Hochsprache)\nNorwegian | Norwegisch\nPersian | Persisch\nPolish | Polnisch\nPortuguese | Portugiesisch\nRomanian | Rumänisch\nRussian | Russisch\nSerbian | Serbisch\nSlovak | Slowakisch\nSlovene | Slowenisch\nSpanish | Spanisch\nSwahili | Suaheli\nSwedish | Schwedisch\nThai | Thailändisch; Thai\nTurkish | Türkisch\nUkrainian | Ukrainisch\nVietnamese | Vietnamesisch\n## I can …\nI can … | Ich kann … | I can see Sherlock. | Ich kann Sherlock sehen.\nto speak | sprechen | Can you speak English? | Kannst du Englisch sprechen?\nto understand | verstehen | I can understand you. | Ich kann dich verstehen.\nto read | lesen | The dialogue is in English. Can you read it? | Der Dialog ist auf Englisch. Kannst du ihn lesen?\nto write | schreiben | Write your name. | Schreib deinen Namen.\nI don't know … | Ich kann kein … | I don't know Arabic. | Ich kann kein Arabisch.\nI'd like to learn … | Ich würde gerne … lernen. | I'd like to learn English. | Ich würde gerne Englisch lernen.\nI like … | Mir gefällt …; Ich mag … | I like my friends. | Ich mag meine Freunde.\nword | Wort | Look at the new words. | Schau dir die neuen Wörter an.\nsound | Ton; Geräusch; Klang | I like the sound of 'r' in Italian words. | Ich mag den Klang von „r“ in italienischen Wörtern.\nof | von | Look! A photo of Sherlock. | Schau! Ein Foto von Sherlock.\nIt sounds … | Es klingt … | I like the word 'hola' in Spanish. It sounds cool. | Ich mag das Wort „hola“ auf Spanisch. Es klingt cool.\ngreat | großartig; toll; super | French is great too. | Französisch ist auch toll.\nsong | Song; Lied\nSing … | Singe/Singt …\nAdd … | Füge/Fügt … hinzu.\nall | alle\n# 172 | Welcome to London!\n## Song: Mulberry bush\nHere we go round the mulberry bush | Hier gehen wir um den Maulbeerbusch\non a cold and frosty morning | an einem kalten und frostigen Morgen\nThis is the way … | Auf diese Art …\nWe wash our hands. | Wir waschen unsere Hände.\nWe wash our face. | Wir waschen uns das Gesicht.\nWe brush our teeth. | Wir putzen uns die Zähne.\nWe comb our hair. | Wir kämmen uns die Haare.\n## Welcome to London!\nwelcome (to) | willkommen (in) | Welcome to London! | Willkommen in London!\nWhat can you hear? | Was kannst du/könnt ihr hören? | What can you hear in London, Sherlock? | Was kannst du in London hören, Sherlock?\nto hear | hören | Hello, can you hear me? | Hallo, kannst du mich hören?\nthe | der; die (auch Mehrzahl); das | | | Vor Vokalen spricht man the wie [ði]: the example.\na | ein/-e | | | a friend = ein Freund\nboat | Boot | Can you see the boat? | Kannst du das Boot sehen?\nflower | Blume | I can see flowers in the park. | Ich kann Blumen im Park sehen.\ngirl | Mädchen | Alina is a girl. | Alina ist ein Mädchen.\non | auf; an; am; in; im | I can see you on the boat. | Ich kann dich auf dem Boot sehen.\nskates | Inlineskates; Rollschuhe; Schlittschuhe | My friend is on skates. | Mein Freund ist auf Inlineskates unterwegs. | skates gibt es nur in der Mehrzahl.\nboy | Junge | I can see boys on skateboards. | Ich kann Jungen auf Skateboards sehen.\nmother | Mutter | My mother is from London. | Meine Mutter kommt aus London.\nfather | Vater | My father is from Ulm. | Mein Vater kommt aus Ulm.\ndog | Hund | Sherlock is a dog. | Sherlock ist ein Hund.\ncat | Katze | A cat is in the park. | Eine Katze ist im Park.\nbird | Vogel | I can see a bird. | Ich kann einen Vogel sehen.\nbutterfly | Schmetterling | Can you see the butterfly? | Kannst du den Schmetterling sehen?\nbee | Biene | A bee is on the flower. | Eine Biene ist auf der Blume.\ntree | Baum | I can see birds in the trees. | Ich kann Vögel in den Bäumen sehen.\ngrass | Gras | I'm on the grass. | Ich bin auf dem Gras.\nbike | Fahrrad | | | Das e am Wortende ist meist stumm.\nto have a picnic | ein Picknick machen | You can have a picnic in the park. | Du kannst im Park ein Picknick machen.\nbook | Buch | I can read a book. | Ich kann ein Buch lesen.\nto play | spielen | You can play football in the park. | Du kannst im Park Fußball spielen.\nto ride | fahren; reiten | You can ride a bike. | Du kannst Fahrrad fahren.\nto talk to | reden mit | Talk to your friends. | Rede mit deinen Freunden.\n# 173 | What can you see and do?\n## I can see … (Park)\na bee | eine Biene\na bird | ein Vogel\na butterfly | ein Schmetterling\na cat | eine Katze\na dog on a leash | ein Hund an der Leine\na parrot | ein Papagei\na pigeon | eine Taube\na flower | eine Blume\na tree | ein Baum\ngrass | Gras\nclouds | Wolken\na river | ein Fluss\n(blue) sky | blauer Himmel\na merry-go-round | ein Karussell\nBig Ben | Glockenturm (in London)\nthe London Eye | Riesenrad (in London)\n## I can see … (Leute & Sachen)\njeans | Jeans\na red T-shirt | ein rotes T-Shirt\ngreen trousers | eine grüne Hose\na helmet | ein Helm\nwhite trainers | weiße Turnschuhe\na bike | ein Fahrrad\na boat | ein Boot\na football | ein Fußball\na skateboard | ein Skateboard\nskates | (Inline-)Skates\na food truck | ein Imbisswagen\na plane | ein Flugzeug\na ship | ein Schiff\na baby | ein Baby\na boy | ein Junge\na father | ein Vater\na girl | ein Mädchen\na mother | eine Mutter\na man | ein Mann\na woman | eine Frau\n## I can …\nhave a picnic | ein Picknick machen\nhave a snack | eine Kleinigkeit essen\neat pizza | Pizza essen\neat a sandwich | ein Sandwich essen\neat a banana | eine Banane essen\nplay football | Fußball spielen\nplay with friends | mit Freunden spielen\nread a book | ein Buch lesen\nread comics | Comics lesen\nride a bike | Fahrrad fahren\ntalk to friends | mit Freunden sprechen\nmeet friends | Freunde treffen\nsit on a bench | auf einer Bank sitzen\n## Wörterliste\nnumber | Zahl; Nummer | 11 is a number. | 11 ist eine Zahl.\ncolour | Farbe | Red is a colour. | Rot ist eine Farbe.\nshorts | Shorts; kurze Hose | Your shorts are green. | Deine kurze Hose ist grün. | shorts gibt es nur in der Mehrzahl.\n# 174 | The friends in Greenwich\n## Numbers 0–12\nzero | null (0)\none | eins (1)\ntwo | zwei (2)\nthree | drei (3)\nfour | vier (4)\nfive | fünf (5)\nsix | sechs (6)\nseven | sieben (7)\neight | acht (8)\nnine | neun (9)\nten | zehn (10)\neleven | elf (11)\ntwelve | zwölf (12)\n## Colours\nblack | schwarz\nblue | blau\nbrown | braun\ngreen | grün\ngrey | grau\norange | orange\npink | pink; rosa\npurple | lila\nred | rot\nwhite | weiß\nyellow | gelb\n## The friends in Greenwich\nMy favourite … | Mein/e Lieblings-… | My favourite colour is green. | Meine Lieblingsfarbe ist Grün.\nto like | mögen; gern haben | I like the park. – Me too! | Ich mag den Park. – Ich auch!\nto take photos | Fotos machen | Can you take a photo? | Kannst du ein Foto machen? | Sag nicht make photos! Das ist ein typischer Fehler.\nbig | groß | Sherlock is a big dog. | Sherlock ist ein großer Hund.\nsister | Schwester | Sophie is Lily's sister. | Sophie ist Lilys Schwester.\nbest | beste/-r/-s | Sophie is my best friend. | Sophie ist meine beste Freundin.\nand | und | Ryan and Ruby are my friends. | Ryan und Ruby sind meine Freunde.\nwe're | wir sind | We're from Greenwich. | Wir sind aus Greenwich. | we're = we are\ntwin | Zwilling; Zwillings- | Ryan and Ruby are twins. | Ryan und Ruby sind Zwillinge.\nto have | haben | I have a black and white cat. | Ich habe eine schwarz-weiße Katze.\nfunny | lustig; witzig | Ryan and Ruby have a funny dog, Sherlock. | Ryan und Ruby haben einen lustigen Hund, Sherlock.\nfootball | Fußball | I play football. You too? | Ich spiele Fußball. Du auch?\nfood | Essen; Lebensmittel | What's your favourite food? | Was ist dein Lieblingsessen?\nto cook | kochen | Cooking is great! | Kochen ist toll!\nnetball | Korbball | Netball is a girls' game at British schools. | Korbball ist an britischen Schulen ein Spiel für Mädchen.\n# 175 | Who is it?\n## Wörterliste\nhe's | er ist | Karam is from Egypt. He's eleven. | Karam kommt aus Ägypten. Er ist elf. | he's = he is\ngood | gut | Ryan and Sherlock are good friends. | Ryan und Sherlock sind gute Freunde.\nbrother | Bruder | Ryan and Ruby are brother and sister. | Ryan und Ruby sind Bruder und Schwester.\nWho is it? | Wer ist es? | Who is it? – It's Lily! | Wer ist es? – Es ist Lily!\nor | oder | \"My favourite colour is blue.\" – Is it Ruby or Ryan? | „Meine Lieblingsfarbe ist Blau.“ – Ist es Ruby oder Ryan?\n## Personal pronouns\nI | ich\nyou | du\nhe | er\nshe | sie (eine Person)\nit | es\nwe | wir\nyou | ihr; Sie\nthey | sie (mehrere)\n## Hobbys\nhobby | Hobby | Cooking and taking photos are two great hobbies. | Kochen und Fotografieren sind zwei tolle Hobbys. | Mehrzahl: hobbies\nYou too? | Du/Ihr/Sie auch? | I'm from Leipzig. You too? | Ich bin aus Leipzig. Du auch?\nto watch | beobachten; (sich) ansehen; zuschauen | Let's watch videos. | Lass uns Videos ansehen.\nyou're | du bist; Sie sind | You're my best friend. | Du bist mein bester Freund. | you're = you are\nMy turn. | Ich bin dran. | It's my turn. | Ich bin dran.\nto draw | zeichnen | I can draw a cat. | Ich kann eine Katze zeichnen.\npicture | Bild; Foto | | | Zeichnung: You draw a picture. Foto: You take a picture.\npet | Haustier | Sherlock is a pet. | Sherlock ist ein Haustier.\ngame | Spiel | We can play my new game. | Wir können mein neues Spiel spielen.\nto sing | singen | Can you sing? | Kannst du singen?\nhorse | Pferd | You can ride a bike or a horse. | Du kannst Fahrrad fahren oder auf einem Pferd reiten.\nto dance | tanzen | I like dancing. | Ich tanze gern.\n# 176 | At Ruby and Ryan's house\n## Free time\nbasketball | Basketball\nbike | Fahrrad\nfootball | Fußball\ntennis | Tennis\nskateboard | Skateboard\nskiing | Skifahren\nwindsurfing | Windsurfen\ncinema | Kino\npicnic | Picknick\nvideo | Video\nmusic | Musik\nguitar | Gitarre\npiano | Klavier; Piano\n## Wörterliste\nat Ruby and Ryan's house | bei Ruby und Ryan zu Hause | Sherlock lives at Ruby and Ryan's house. | Sherlock wohnt bei Ruby und Ryan zu Hause.\nat | in; auf; bei; an | We can play games at my house. | Wir können bei mir zu Hause Spiele spielen.\nhouse | Haus | Karam's house is in Greenwich. | Karams Haus ist in Greenwich.\nbored | gelangweilt | I'm bored. | Mir ist langweilig.\nLet's … | Lass(t) uns … | Let's play in the park! | Lass uns im Park spielen!\nto go (to) | gehen (zu/nach); fahren (zu/nach) | I live in Greenwich now and I go to a new school. | Ich wohne jetzt in Greenwich und gehe auf eine neue Schule.\nto | zu; nach; auf; in | | | Wenn man to nicht betont, spricht man es [tə].\nHow are you? | Wie geht es dir?; Wie geht es euch?; Wie geht es Ihnen? | How are you? – I'm OK. | Wie geht es dir? – Mir geht's gut.\nfine | gut; in Ordnung; schön | | | How are you? hörst du in England jeden Tag. I'm fine ist die höfliche Antwort.\nThanks. | Danke. | Thanks for the photos. | Danke für die Fotos.\nthis | dies; diese/-r/-s | This is my dog. | Das ist mein Hund.\nshe | sie | Ruby is my friend. She is eleven. | Ruby ist meine Freundin. Sie ist elf.\nhere | hier | This is my house. I live here. | Das ist mein Haus. Ich wohne hier.\ntomorrow | morgen | Today is Friday. Tomorrow is Saturday. | Heute ist Freitag. Morgen ist Samstag.\nthe first day of school | der erste Schultag | | | In England endet die primary school nach Klasse 6. Ab Klasse 7 geht man auf eine secondary school.\nyes | ja | Are you from Greenwich? – Yes, you too? | Bist du aus Greenwich? – Ja, du auch?\nCome on! | Komm(t) schon!; Komm(t) jetzt! | Come on! I'm bored, let's go! | Komm schon! Mir ist langweilig, lass uns gehen!\nto come | kommen | Can you come to my house tomorrow? | Kannst du morgen zu mir nach Hause kommen?\nIt's time for … | Es ist Zeit für … | It's time for school, let's go. | Es ist Zeit für die Schule, lass uns gehen.\nice cream | Eis; Eiscreme | The friends like ice cream. | Die Freunde mögen Eis.\n# 177 | Tomorrow is the first day of school\n## Wörterliste\ncan't | kann nicht; können nicht | I can't sing. Can you? | Ich kann nicht singen. Kannst du es? | Aussprache: can [æ], can't [ɑː]\nme | mich; mir | Can you see me? | Kannst du mich sehen?\n## Tomorrow is the first day of school\nthing | Ding; Sache\nexercise book | Übungsheft | The exercise books are blue and orange. | Die Übungshefte sind blau und orange.\nmarker | Leuchtstift | I have two markers. | Ich habe zwei Leuchtstifte.\npen | Füller | I have blue, green and red pens. | Ich habe blaue, grüne und rote Füller.\npencil | Bleistift; Buntstift | Where are my pencils? | Wo sind meine Bleistifte?\npencil case | Federmäppchen; Mäppchen | My pencil case is green. | Mein Mäppchen ist grün.\nrubber | Radiergummi | I can see two rubbers in the picture. | Ich kann zwei Radiergummis auf dem Bild sehen.\nruler | Lineal | My ruler is in my pencil case. | Mein Lineal ist in meinem Mäppchen.\nschoolbag | Schultasche | My exercise book is in my schoolbag. | Mein Übungsheft ist in meiner Schultasche.\n## School things\nbook | Buch\npen | Kugelschreiber\ncrayon | Buntstift\nglue | Klebestift\nscissors | Schere\nsharpener | Spitzer\n";
+
+/* ---------- data ---------- */
+const PAGES = [];
+let ALL = [];
+// text format: "# 170 | Title", "## Section", "english | deutsch | example | Beispiel | tip"
+function parsePages(raw,key){
+  const out=[]; let page=null, sec=null;
+  raw.split("\n").forEach(line=>{
+    line=line.trim(); if(!line||line.startsWith("```")) return;
+    if(line.startsWith("# ")){ const [n,t]=line.slice(2).split("|").map(s=>s.trim()); page={n:n||"?",title:t||"Neue Seite",secs:[],custom:false}; out.push(page); sec=null; return; }
+    if(!page){ page={n:"?",title:"Neue Seite",secs:[]}; out.push(page); }
+    if(line.startsWith("## ")){ sec={name:line.slice(3).trim()||"Wörter",items:[]}; page.secs.push(sec); return; }
+    const [en,de,ex,exDe,tip]=line.split("|").map(s=>(s||"").trim());
+    if(!en||!de) return;
+    if(!sec){ sec={name:"Wörterliste",items:[]}; page.secs.push(sec); }
+    sec.items.push({en,de,ex:ex||"",exDe:exDe||"",tip:tip||""});
+  });
+  out.forEach((pg,i)=>{ pg.secs=pg.secs.filter(x=>x.items.length); pg.k=key(pg,i); });
+  return out.filter(pg=>pg.secs.length);
+}
+const BUILTIN=parsePages(RAW,pg=>+pg.n);
+function rebuildData(){
+  PAGES.length=0; BUILTIN.forEach(p=>PAGES.push(p));
+  (S.custom||[]).forEach(c=>parsePages(c.text,()=>c.k).slice(0,1).forEach(p=>{p.custom=true; PAGES.push(p);}));
+  PAGES.forEach(p=>p.secs.forEach((sec,si)=>sec.items.forEach(w=>{ w.id=p.k+":"+si+":"+w.en; w.page=p.k; w.pn=p.n; w.sec=si; })));
+  ALL=PAGES.flatMap(p=>p.secs.flatMap(s=>s.items));
+}
+
+/* ---------- answer checking ---------- */
+const CONTR=[["i'm","i am"],["what's","what is"],["he's","he is"],["she's","she is"],["it's","it is"],["we're","we are"],["you're","you are"],["they're","they are"],["let's","let us"],["can't","cannot"],["can not","cannot"],["don't","do not"],["i'd","i would"],["who's","who is"]];
+function norm(s){
+  s=s.toLowerCase().replace(/[’‘`´]/g,"'").replace(/…|\.\.\./g," ").replace(/[!?.,;:"„“”–-]/g," ").replace(/\s+/g," ").trim();
+  for(const [a,b] of CONTR) s=s.replace(new RegExp("(^| )"+a.replace(/'/g,"'")+"(?= |$)","g"),"$1"+b);
+  return s;
+}
+function variants(en){
+  const out=new Set();
+  const add=v=>{v=norm(v); if(!v) return; out.add(v);
+    const m=v.match(/^(to|a|an|the) (.+)$/); if(m) out.add(m[2]); };
+  // parentheses optional: "welcome (to)" → "welcome to", "welcome"
+  const withP=en.replace(/[()]/g,""), noP=en.replace(/\([^)]*\)/g,"");
+  [en,withP,noP].forEach(v=>{ add(v); if(v.includes("/")) v.split("/").forEach(add); });
+  return out;
+}
+// every English answer that belongs to the same German prompt counts (e.g. Buntstift → pencil, crayon)
+// shared if the German prompts are equal, or one prompt is one of the other's meanings
+const deParts=de=>de.split(";").map(norm);
+function accepted(w){ const s=new Set(variants(w.en)); const k=norm(w.de), wp=deParts(w.de);
+  ALL.forEach(x=>{ const xk=norm(x.de); if(xk===k||wp.includes(xk)||deParts(x.de).includes(k)) variants(x.en).forEach(v=>s.add(v)); }); return s; }
+function lev(a,b){ const m=a.length,n=b.length; if(Math.abs(m-n)>2) return 9; let p=Array.from({length:n+1},(_,i)=>i);
+  for(let i=1;i<=m;i++){ const c=[i]; for(let j=1;j<=n;j++) c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1)); p=c; } return p[n]; }
+function check(w,input){
+  const a=norm(input); if(!a) return "empty";
+  const acc=accepted(w); const aNo=a.replace(/^(to|a|an|the) /,"");
+  if(acc.has(a)||acc.has(aNo)) return "ok";
+  const noAp=t=>t.replace(/'/g,"");
+  const rawIn=noAp(input.toLowerCase().replace(/[’‘`´]/g,"'")).replace(/[!?.,;:"„“”…–-]/g," ").replace(/\s+/g," ").trim();
+  const rawEn=noAp(w.en.toLowerCase().replace(/[’]/g,"'")).replace(/\([^)]*\)/g,"").replace(/[!?.,;:"…–-]/g," ").replace(/\s+/g," ").trim();
+  if(rawIn===rawEn||rawIn===rawEn.replace(/^(to|a|an|the) /,"")) return "almost"; // only the apostrophe is missing, e.g. "im" for I'm
+  for(const v of acc){ const d=lev(a,v); if(d<=1 && v.length>=4 || d<=2 && v.length>=10) return "almost"; }
+  return "bad";
+}
+const clean = s => s.replace(/\s*…\s*/g," …").trim();
+
+/* ---------- state ---------- */
+const KEY="vokabelfuchs.v1";
+const DEFAULT={v:1,updatedAt:0,words:{},xp:0,streak:0,lastDay:"",blitzBest:0,stickers:[],
+  totals:{typed:0,sent:0,rounds:0},sel:{pages:[170],off:[]},size:10,hard:false,reverse:false,sound:true,custom:[]};
+let S=load(); rebuildData();
+function load(){ try{ const j=JSON.parse(localStorage.getItem(KEY)); if(j&&j.v===1) return Object.assign(structuredClone(DEFAULT),j);}catch(e){} return structuredClone(DEFAULT); }
+let cloudRef=null, cloudTimer=null;
+function save(){ S.updatedAt=Date.now(); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+  if(cloudRef){ clearTimeout(cloudTimer); cloudTimer=setTimeout(()=>cloudRef.set({s:JSON.stringify(S),updatedAt:S.updatedAt}).catch(()=>{}),1200); } }
+async function initCloud(){
+  try{
+    if(!window.claude||!window.claude.use) return;
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    if(!db||!user) return; const id=await user.id(); if(!id) return;
+    const ref=db.doc("data/users/"+id+"/progress"); const snap=await ref.get();
+    cloudRef=ref;
+    if(snap.exists){ const d=snap.data(); if((d.updatedAt||0)>(S.updatedAt||0)){ try{ S=Object.assign(structuredClone(DEFAULT),JSON.parse(d.s)); rebuildData(); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} renderHome(); }catch(e){} } else save(); }
+    else save();
+  }catch(e){ cloudRef=null; }
+}
+const W = id => S.words[id]||(S.words[id]={b:0,r:0,w:0});
+function today(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function touchStreak(){ const t=today(); if(S.lastDay===t) return; const y=new Date(Date.now()-864e5); const ys=y.getFullYear()+"-"+String(y.getMonth()+1).padStart(2,"0")+"-"+String(y.getDate()).padStart(2,"0");
+  S.streak = S.lastDay===ys ? S.streak+1 : 1; S.lastDay=t; }
+function liveStreak(){ const t=today(); const y=new Date(Date.now()-864e5); const ys=y.getFullYear()+"-"+String(y.getMonth()+1).padStart(2,"0")+"-"+String(y.getDate()).padStart(2,"0"); return (S.lastDay===t||S.lastDay===ys)?S.streak:0; }
+
+/* levels */
+const LEVELS=["Neuling","Wort-Sammler","Satz-Bastler","Vokabel-Profi","London-Kenner","Englisch-Ass","Sprach-Held","Vokabel-Legende"];
+const lvlNeed = L => 25*L*(L+1); // total xp to reach level L+1
+function levelOf(xp){ let L=1; while(xp>=lvlNeed(L)) L++; return L; }
+
+/* stickers */
+const STK=[
+  {id:"first",e:"🚀",n:"Los geht's",d:"Erste Runde geschafft"},
+  {id:"perfect",e:"💯",n:"Fehlerfrei",d:"10+ Wörter ohne Fehler"},
+  {id:"combo10",e:"🔥",n:"Feuer!",d:"10 richtig am Stück"},
+  {id:"typed25",e:"✏️",n:"Schreib-Profi",d:"25 Wörter richtig geschrieben"},
+  {id:"sent10",e:"💬",n:"Satz-Profi",d:"10 Sätze übersetzt"},
+  {id:"blitz12",e:"⚡",n:"Blitzschnell",d:"12 Punkte in der Blitz-Runde"},
+  {id:"blitz20",e:"🌩️",n:"Gewitter",d:"20 Punkte in der Blitz-Runde"},
+  {id:"streak3",e:"📅",n:"3 Tage dran",d:"3 Tage in Folge geübt"},
+  {id:"streak7",e:"🏆",n:"Wochen-Held",d:"7 Tage in Folge geübt"},
+  {id:"words50",e:"🧠",n:"50 sitzen",d:"50 Wörter sicher gelernt"},
+  {id:"words150",e:"🦉",n:"Wort-Eule",d:"150 Wörter sicher gelernt"},
+  {id:"page3",e:"⭐",n:"Seite gemeistert",d:"3 Sterne auf einer Seite"},
+  {id:"lvl4",e:"🎓",n:"Level 4",d:"Level 4 erreicht"},
+  {id:"night",e:"🌙",n:"Nachteule",d:"Nach 20 Uhr geübt"},
+  {id:"bigben",e:"🕰️",n:"Big Ben",d:"Alle 8 Seiten in einer Runde"},
+];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const STAR=(on)=>`<svg viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="${on?"var(--hl)":"none"}" stroke="${on?"var(--ink)":"var(--line)"}" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+const SPK=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>`;
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("show"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("show"),2200); }
+
+/* fox mascot (original drawing) */
+function foxSVG(){ return `
+<ellipse cx="50" cy="93" rx="26" ry="4" fill="var(--line)"/>
+<path d="M18 14 L36 34 L22 44 Z" fill="#F27A1A" stroke="#1E2B57" stroke-width="3" stroke-linejoin="round"/>
+<path d="M82 14 L64 34 L78 44 Z" fill="#F27A1A" stroke="#1E2B57" stroke-width="3" stroke-linejoin="round"/>
+<path d="M22 22 L30 33 L24 37 Z M78 22 L70 33 L76 37 Z" fill="#1E2B57"/>
+<path d="M50 88 C26 88 14 66 16 46 C18 34 32 28 50 28 C68 28 82 34 84 46 C86 66 74 88 50 88 Z" fill="#F27A1A" stroke="#1E2B57" stroke-width="3"/>
+<path d="M50 88 C36 88 24 76 22 62 C30 66 40 64 50 58 C60 64 70 66 78 62 C76 76 64 88 50 88 Z" fill="#FFF7EC" stroke="#1E2B57" stroke-width="3" stroke-linejoin="round"/>
+<g class="eye-n" fill="#1E2B57"><ellipse cx="37" cy="52" rx="4.2" ry="5.2"/><ellipse cx="63" cy="52" rx="4.2" ry="5.2"/><circle cx="38.5" cy="50" r="1.4" fill="#fff"/><circle cx="64.5" cy="50" r="1.4" fill="#fff"/></g>
+<g class="eye-o" fill="none" stroke="#1E2B57" stroke-width="3.2" stroke-linecap="round"><path d="M32 54 Q37 47 42 54"/><path d="M58 54 Q63 47 68 54"/></g>
+<ellipse cx="50" cy="66" rx="5" ry="3.6" fill="#1E2B57"/>
+<path class="m-happy" d="M43 73 Q50 80 57 73" fill="none" stroke="#1E2B57" stroke-width="3" stroke-linecap="round"/>
+<path class="m-sad" d="M44 77 Q50 72 56 77" fill="none" stroke="#1E2B57" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="28" cy="64" rx="5" ry="3" fill="#FF8FA8" opacity=".55"/><ellipse cx="72" cy="64" rx="5" ry="3" fill="#FF8FA8" opacity=".55"/>`; }
+function foxMood(el,mood){ el.classList.remove("happy","sad","bounce"); void el.offsetWidth; if(mood) el.classList.add(mood); if(mood==="happy") el.classList.add("bounce"); }
+
+/* sound */
+let AC=null;
+function beep(seq){ if(!S.sound) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); let t=AC.currentTime;
+  seq.forEach(([f,d,type])=>{ const o=AC.createOscillator(),g=AC.createGain(); o.type=type||"triangle"; o.frequency.value=f; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.18,t+.015); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g).connect(AC.destination); o.start(t); o.stop(t+d+.02); t+=d*.8; }); }catch(e){} }
+const SND={ok:()=>beep([[660,.11],[990,.16]]),bad:()=>beep([[220,.18,"sine"],[180,.22,"sine"]]),
+  combo:()=>beep([[660,.08],[880,.08],[1180,.14]]),win:()=>beep([[523,.12],[659,.12],[784,.12],[1047,.3]]),tick:()=>beep([[1200,.04,"square"]])};
+// Voice A: friendly female British voice, slightly higher, calm tempo
+const FRIENDLY=["serena","kate","stephanie","martha","fiona","moira","tessa","karen","samantha","catherine","libby","sonia","hazel","susan"];
+let VOICE=null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)); if(!vs.length) return null;
+  const sc=v=>{ const n=v.name.toLowerCase(), i=FRIENDLY.findIndex(f=>n.includes(f)); return (i>=0?50-i:0)+(/premium|enhanced|natural/i.test(v.name)?20:0)+(/en[-_]GB/i.test(v.lang)?20:0); };
+  return vs.sort((a,b)=>sc(b)-sc(a))[0]; }catch(e){ return null; } }
+try{ speechSynthesis.onvoiceschanged=()=>{ VOICE=pickVoice(); }; }catch(e){}
+function speak(text){ try{ const u=new SpeechSynthesisUtterance(text.replace(/…/g,"")); VOICE=VOICE||pickVoice();
+  u.lang=VOICE?VOICE.lang:"en-GB"; if(VOICE) u.voice=VOICE; u.pitch=1.3; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+
+/* confetti */
+const fx=$("#fx"), ctx=fx.getContext("2d"); let parts=[], fxRun=false;
+function confetti(n=120){ if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  fx.width=innerWidth*devicePixelRatio; fx.height=innerHeight*devicePixelRatio; const cols=["#FFE14D","#F2416F","#119E62","#3770F0","#F27A1A"];
+  for(let i=0;i<n;i++) parts.push({x:fx.width/2,y:fx.height*.35,vx:(Math.random()-.5)*16*devicePixelRatio,vy:(-Math.random()*14-4)*devicePixelRatio,s:(5+Math.random()*6)*devicePixelRatio,c:cols[i%5],r:Math.random()*6,vr:(Math.random()-.5)*.4,l:120+Math.random()*60});
+  if(!fxRun){fxRun=true; requestAnimationFrame(tickFx);} }
+function tickFx(){ ctx.clearRect(0,0,fx.width,fx.height); parts=parts.filter(p=>p.l-->0);
+  parts.forEach(p=>{p.vy+=.45*devicePixelRatio; p.vx*=.99; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/3,p.s,p.s*.66); ctx.restore();});
+  if(parts.length) requestAnimationFrame(tickFx); else {fxRun=false; ctx.clearRect(0,0,fx.width,fx.height);} }
+
+/* ---------- home ---------- */
+const GREET=["Hi! Welche Seiten üben wir heute?","Hello! Ready for some English?","Let's go! Kreuz ein paar Seiten an.","Schön, dass du da bist! Have fun!","Nice to see you! Heute knacken wir Wörter."];
+function pageStars(p){ const items=p.secs.flatMap(s=>s.items); const m=items.filter(w=>(S.words[w.id]?.b||0)>=3).length/items.length;
+  return m>=1?3:m>=.6?2:m>=.25?1:0; }
+function selectedWords(){
+  const on=new Set(S.sel.pages), off=new Set(S.sel.off);
+  return ALL.filter(w=>on.has(w.page)&&!off.has(w.page+":"+w.sec)); }
+let openSecs=new Set();
+function renderHome(){
+  const fox=$("#fox-home"); fox.innerHTML=foxSVG();
+  const L=levelOf(S.xp); $("#lvl").textContent="Level "+L; $("#lvlname").textContent=LEVELS[Math.min(L-1,LEVELS.length-1)];
+  const prev=L>1?lvlNeed(L-1):0; $("#xpfill").style.width=Math.round((S.xp-prev)/(lvlNeed(L)-prev)*100)+"%";
+  $("#xp").textContent=S.xp; const st=liveStreak(); $("#streak").textContent=st+(st?" 🔥":""); $("#streaklbl").textContent=st===1?"Tag in Folge":"Tage in Folge";
+  $("#soundBtn").innerHTML=S.sound?SPK:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>`;
+  // pages
+  const box=$("#pages"); box.innerHTML="";
+  PAGES.forEach(p=>{
+    const on=S.sel.pages.includes(p.k); const n=p.secs.reduce((a,s)=>a+s.items.length,0); const stars=pageStars(p);
+    const el=document.createElement("div"); el.className="page"+(on?" on":"");
+    el.innerHTML=`<button class="page-row" aria-pressed="${on}"><span class="pnum">${esc(p.n)}</span><span class="pinfo"><strong>${esc(p.title)}</strong><span>${n} Wörter · ${p.custom?"selbst hinzugefügt":p.secs.length+" Abschnitt"+(p.secs.length>1?"e":"")}</span></span><span class="stars">${STAR(stars>0)+STAR(stars>1)+STAR(stars>2)}</span><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button>`;
+    el.querySelector(".page-row").onclick=()=>{ const i=S.sel.pages.indexOf(p.k); if(i>=0) S.sel.pages.splice(i,1); else { S.sel.pages.push(p.k); openSecs.add(p.k);} save(); renderHome(); };
+    if(on && (p.secs.length>1||p.custom)){
+      if(openSecs.has(p.k)||p.secs.length<2){
+        const secs=document.createElement("div"); secs.className="secs";
+        p.secs.forEach((s,si)=>{ const k=p.k+":"+si; const b=document.createElement("button"); const son=!S.sel.off.includes(k);
+          b.className="sec"+(son?" on":""); b.textContent=s.name+" ("+s.items.length+")"; b.setAttribute("aria-pressed",son);
+          b.onclick=()=>{ const i=S.sel.off.indexOf(k); if(i>=0) S.sel.off.splice(i,1); else S.sel.off.push(k); save(); renderHome(); };
+          if(p.secs.length>1) secs.appendChild(b); });
+        if(p.custom){ const d=document.createElement("button"); d.className="sec del"; d.textContent="Seite löschen";
+          d.onclick=()=>{ if(!d.dataset.sure){ d.dataset.sure=1; d.textContent="Wirklich löschen? Nochmal tippen"; return; }
+            S.custom=S.custom.filter(c=>c.k!==p.k); S.sel.pages=S.sel.pages.filter(x=>x!==p.k); rebuildData(); save(); renderHome(); toast("Seite gelöscht"); };
+          secs.appendChild(d); }
+        el.appendChild(secs);
+      } else {
+        const off=p.secs.filter((s,si)=>S.sel.off.includes(p.k+":"+si)).length;
+        const m=document.createElement("button"); m.className="more"; m.textContent=off?`${p.secs.length-off} von ${p.secs.length} Abschnitten · ändern`:"Abschnitte auswählen";
+        m.onclick=()=>{openSecs.add(p.k); renderHome();}; el.appendChild(m);
+      }
+    }
+    box.appendChild(el);
+  });
+  const sel=selectedWords(); const hard=sel.filter(w=>{const x=S.words[w.id];return x&&x.w>0&&x.b<=1;}).length;
+  $("#selinfo").innerHTML=sel.length?`<b>${sel.length}</b> Wörter ausgewählt · davon <b>${sel.filter(w=>w.ex).length}</b> mit Beispielsatz · <b>${hard}</b> Wackel-Wörter`:`<span class="muted">Noch keine Seite angekreuzt.</span>`;
+  $("#allBtn").textContent=S.sel.pages.length===PAGES.length?"Keine":"Alle";
+  document.querySelectorAll("#sizeSeg button").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.size===S.size));
+  $("#hardOnly").checked=S.hard; $("#reverse").checked=S.reverse;
+  // stickers
+  const sb=$("#stickers"); sb.innerHTML=""; STK.forEach((s,i)=>{ const got=S.stickers.includes(s.id);
+    const c=document.createElement("div"); c.className="stk-cell"; c.innerHTML=`<div class="stk${got?" got":""}" style="--r:${(i%3-1)*6}deg" title="${esc(s.d)}"><span>${s.e}</span></div><div class="stk-name">${got?esc(s.n):"?"}</div>`;
+    c.onclick=()=>toast((got?s.n+": ":"Noch geheim: ")+s.d); sb.appendChild(c); });
+  $("#stkcount").textContent=S.stickers.length+" / "+STK.length;
+  if(typeof renderFoot==="function") renderFoot();
+}
+$("#allBtn").onclick=()=>{ S.sel.pages = S.sel.pages.length===PAGES.length?[]:PAGES.map(p=>p.k); save(); renderHome(); };
+$("#sizeSeg").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; S.size=+b.dataset.size; save(); renderHome(); };
+$("#hardOnly").onchange=e=>{ S.hard=e.target.checked; save(); renderHome(); };
+$("#reverse").onchange=e=>{ S.reverse=e.target.checked; save(); };
+$("#soundBtn").onclick=()=>{ S.sound=!S.sound; save(); renderHome(); if(S.sound) SND.ok(); };
+document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>start(b.dataset.mode));
+
+/* ---------- round ---------- */
+let R=null;
+function pickWords(mode){
+  let pool=selectedWords(); if(mode==="sent") pool=pool.filter(w=>w.ex);
+  if(S.hard){ const h=pool.filter(w=>{const x=S.words[w.id];return x&&x.w>0&&x.b<=1;}); if(h.length) pool=h; else toast("Keine Wackel-Wörter da. Wir nehmen alle!"); }
+  // dedupe identical prompts inside one round
+  const seen=new Set(); pool=shuffle(pool.slice()).filter(w=>{const k=(mode==="sent"?w.ex:w.de)+"|"+w.en; if(seen.has(k)) return false; seen.add(k); return true;});
+  pool.sort((a,b)=>((S.words[a.id]?.b||0)-(S.words[b.id]?.b||0))+(Math.random()-.5)*1.5);
+  return mode==="blitz"?pool:(S.size?pool.slice(0,S.size):pool);
+}
+function start(mode){
+  const sel=selectedWords();
+  if(!sel.length){ toast("Kreuz zuerst mindestens eine Seite an!"); $("#pages").scrollIntoView({behavior:"smooth"}); return; }
+  const words=pickWords(mode);
+  if(!words.length){ toast("Auf diesen Seiten gibt es keine Beispielsätze."); return; }
+  if(mode==="blitz" && selectedWords().length<4){ toast("Für die Blitz-Runde brauchst du mindestens 4 Wörter."); return; }
+  R={mode,queue:words.slice(),total:words.length,done:0,right:0,wrong:0,combo:0,maxCombo:0,xp:0,missed:new Map(),retried:new Set(),firstTry:new Set(),
+     time:60,pages:new Set(words.map(w=>w.page))};
+  $("#home").hidden=true; $("#result").hidden=true; $("#play").hidden=false; scrollTo(0,0);
+  if(mode==="blitz"){ R.queue=shuffle(words.slice()); R.timerId=setInterval(blitzTick,1000); }
+  updateBar(); next();
+}
+function updateBar(){
+  if(R.mode==="blitz"){ $("#progfill").style.width=(R.time/60*100)+"%"; $("#combo").className="timer"+(R.time<=10?" low":""); $("#combo").textContent=R.time+"s"; return; }
+  $("#progfill").style.width=(R.done/R.total*100)+"%";
+  const c=$("#combo"); c.className="combo"; c.textContent=R.combo>=2?"×"+R.combo+" 🔥":"";
+}
+function bumpCombo(){ const c=$("#combo"); c.classList.remove("hot"); void c.offsetWidth; if(R.combo>=2) c.classList.add("hot"); }
+function next(){
+  if(R.mode!=="blitz" && !R.queue.length) return finish();
+  if(R.mode==="blitz" && !R.queue.length) R.queue=shuffle(pickWords("blitz"));
+  R.cur=R.queue.shift();
+  ({cards:showCard,type:showType,sent:showSent,blitz:showBlitz})[R.mode](R.cur);
+}
+function grade(w,ok,{xp=10,count=true}={}){
+  const x=W(w.id); const first=!R.retried.has(w.id);
+  if(ok){ R.combo++; R.maxCombo=Math.max(R.maxCombo,R.combo); x.r++; if(first){ x.b=Math.min(5,x.b+1); R.firstTry.add(w.id);} else x.b=Math.max(x.b,1);
+    const gain=xp+Math.min(R.combo-1,10)*2; R.xp+=gain; R.right++;
+    if(R.combo>0&&R.combo%5===0) SND.combo(); else SND.ok();
+  } else { R.combo=0; x.w++; x.b=1; R.wrong++; R.missed.set(w.id,w); SND.bad();
+    if(R.mode!=="blitz" && !R.retried.has(w.id)){ R.retried.add(w.id); R.queue.splice(Math.min(R.queue.length,3+Math.random()*3|0),0,w); R.total++; } }
+  if(count) R.done++;
+  updateBar(); bumpCombo();
+}
+function exHTML(w){ if(!w.ex) return ""; let core=clean(w.en).replace(/^to /,"").replace(/ …$/,"").replace(/[().!?]/g,"").trim();
+  let h=esc(w.ex); if(core.length>1){ const q=core.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); const re=new RegExp((/^\w/.test(core)?"\\b":"")+"("+q+")"+(/\w$/.test(core)?"\\b":""),"i"); h=h.replace(re,"<em class=\"mark\">$1</em>"); } return h; }
+const tipHTML=w=>w.tip?`<div class="tip">💡 ${esc(w.tip)}</div>`:"";
+const pgHTML=w=>`<span class="pg">S. ${esc(w.pn)}</span>`;
+
+/* mode 1: flashcards */
+function showCard(w){
+  const rev=S.reverse;
+  const front=rev?`<div class="word">${esc(clean(w.en))}</div>`:`<div class="word">${esc(w.de)}</div>`;
+  const back=rev?`<div class="muted">${esc(clean(w.en))}</div><div class="answer">${esc(w.de)}</div>`
+                :`<div class="muted">${esc(w.de)}</div><div class="answer">${esc(clean(w.en))}</div>`;
+  $("#stage").innerHTML=`
+  <div class="flip" id="flip" role="button" tabindex="0" aria-label="Karte umdrehen"><div class="flip-in">
+    <div class="face front qcard"><span class="label">${rev?"Englisch":"Deutsch"}</span>${pgHTML(w)}${front}<div class="taphint">Antippen zum Umdrehen</div></div>
+    <div class="face back qcard"><span class="label">${rev?"Deutsch":"Englisch"}</span>${pgHTML(w)}${back}
+      <button class="speak" id="spk">${SPK} anhören</button>${w.ex?`<p class="ex">${exHTML(w)}</p>`:""}${tipHTML(w)}</div>
+  </div></div>
+  <div class="btnrow" id="rate" style="visibility:hidden"><button class="btn no" id="nope">Noch nicht</button><button class="btn go" id="yes">Gewusst!</button></div>`;
+  const f=$("#flip"); const turn=()=>{ if(f.classList.contains("turned")) return; f.classList.add("turned"); $("#rate").style.visibility="visible"; speak(w.en); };
+  f.onclick=e=>{ if(e.target.closest("#spk")) return; turn(); }; f.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){e.preventDefault();turn();} };
+  $("#spk").onclick=e=>{e.stopPropagation(); speak(w.en);};
+  $("#yes").onclick=()=>{ grade(w,true); next(); };
+  $("#nope").onclick=()=>{ grade(w,false); next(); };
+}
+
+/* mode 2: typing */
+function blanks(en){ return clean(en).replace(/ …/g,"").split(" ").map(p=>p.replace(/[A-Za-z]/g,"_")).join("  "); }
+function showType(w){
+  const target=clean(w.en).replace(/ …$/,"");
+  $("#stage").innerHTML=`
+  <div class="qcard"><span class="label">Wie heißt das auf Englisch?</span>${pgHTML(w)}<div class="word">${esc(w.de)}</div><div class="blanks" aria-hidden="true">${esc(blanks(w.en))}</div></div>
+  <form id="tf" autocomplete="off"><input class="typein" id="ti" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="Englisch eintippen …" aria-label="Englisches Wort"></form>
+  <div class="btnrow" id="tbtns"><button class="btn ghost" id="hint">💡 Tipp: Buchstabe</button><button class="btn go" id="tcheck">Prüfen</button></div>
+  <div id="tfb"></div>`;
+  const ti=$("#ti"); setTimeout(()=>ti.focus(),50); let hints=0, done=false;
+  $("#hint").onclick=()=>{ hints++; ti.value=target.slice(0,hints); ti.focus(); };
+  const submit=()=>{
+    if(done){ next(); return; }
+    const res=check(w,ti.value); if(res==="empty"){ ti.focus(); return; }
+    done=true; ti.readOnly=true; ti.blur();
+    if(res==="ok"){ ti.classList.add("ok"); grade(w,true,{xp:hints?5:15}); S.totals.typed++;
+      $("#tfb").innerHTML=`<div class="fb ok"><strong>${praise()}</strong>${norm(ti.value)!==norm(target)?`<span>So steht es im Buch: <b>${esc(target)}</b></span>`:""}${w.ex?`<span class="ex">${exHTML(w)}</span>`:""}</div>`;
+      speak(target);
+    } else {
+      ti.classList.add("bad"); grade(w,false);
+      $("#tfb").innerHTML=`<div class="fb bad"><strong>${res==="almost"?"Fast! Nur ein kleiner Fehler.":"Leider nicht."}</strong><span>Du: <s>${esc(ti.value)}</s></span><span>Richtig: <span class="right">${esc(target)}</span></span>${tipHTML(w)}
+        <button class="btn ghost" id="override" type="button">Das war doch richtig</button></div>`;
+      $("#override").onclick=()=>{ R.combo=0; R.wrong--; R.missed.delete(w.id); const x=W(w.id); x.w--; x.b=Math.max(1,x.b);
+        const qi=R.queue.lastIndexOf(w); if(qi>=0){R.queue.splice(qi,1); R.total--;}
+        R.retried.delete(w.id); grade(w,true,{count:false}); S.totals.typed++; next(); };
+      speak(target);
+    }
+    $("#tcheck").textContent="Weiter →"; $("#hint").style.visibility="hidden";
+  };
+  $("#tf").onsubmit=e=>{e.preventDefault(); submit();};
+  $("#tcheck").onclick=submit;
+}
+
+/* mode 3: sentences */
+function showSent(w){
+  $("#stage").innerHTML=`
+  <div class="qcard"><span class="label">Übersetze ins Deutsche</span>${pgHTML(w)}
+    <div class="word" style="font-size:clamp(22px,6.4vw,30px)">${exHTML(w)}</div>
+    <button class="speak" id="spk">${SPK} anhören</button>
+    <div class="muted" style="font-size:14px">Sag es laut oder denk es dir. Dann aufdecken.</div></div>
+  <button class="btn hl" id="reveal">Übersetzung zeigen</button>
+  <div id="sol" hidden><div class="fb ok" style="background:var(--card);border:2px solid var(--line)"><span class="label">Deutsch</span><span class="right">${esc(w.exDe)}</span><span class="muted" style="font-size:14px"><b>${esc(clean(w.en))}</b> = ${esc(w.de)}</span></div>
+    <div class="btnrow" style="margin-top:12px"><button class="btn no" id="nope">Daneben</button><button class="btn go" id="yes">Hab ich!</button></div></div>`;
+  $("#spk").onclick=()=>speak(w.ex);
+  $("#reveal").onclick=()=>{ $("#reveal").hidden=true; $("#sol").hidden=false; };
+  $("#sol").addEventListener("click",e=>{ if(e.target.id==="yes"){ grade(w,true); S.totals.sent++; next(); } if(e.target.id==="nope"){ grade(w,false); next(); } });
+  speak(w.ex);
+}
+
+/* mode 4: blitz */
+function showBlitz(w){
+  const pool=selectedWords().filter(x=>norm(x.en)!==norm(w.en)&&norm(x.de)!==norm(w.de));
+  const opts=shuffle([w,...shuffle(pool.slice()).filter((x,i,a)=>a.findIndex(y=>norm(y.en)===norm(x.en))===i).slice(0,3)]);
+  $("#stage").innerHTML=`<div class="qcard" style="min-height:140px"><span class="label">Punkte: ${R.right}</span><span class="pg">Rekord: ${S.blitzBest}</span><div class="word">${esc(w.de)}</div></div>
+    <div class="choices">${opts.map((o,i)=>`<button class="choice" data-i="${i}">${esc(clean(o.en))}</button>`).join("")}</div>`;
+  let locked=false;
+  document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+    if(locked||!R) return; locked=true; const o=opts[+b.dataset.i];
+    if(o===w){ b.classList.add("ok"); grade(w,true,{xp:5}); }
+    else { b.classList.add("bad"); document.querySelectorAll(".choice")[opts.indexOf(w)].classList.add("ok"); grade(w,false); R.time=Math.max(0,R.time-3); }
+    updateBar(); setTimeout(()=>{ if(R&&R.time>0) next(); }, o===w?250:900);
+  });
+}
+function blitzTick(){ if(!R) return; R.time--; if(R.time<=5&&R.time>0) SND.tick(); updateBar(); if(R.time<=0){ clearInterval(R.timerId); finish(); } }
+
+/* feedback words */
+const PRAISE=["Super!","Great!","Klasse!","Well done!","Stark!","Awesome!","Perfekt!","Yes!"];
+const praise=()=>PRAISE[Math.random()*PRAISE.length|0];
+
+/* ---------- finish ---------- */
+function finish(){
+  if(!R) return; clearInterval(R.timerId);
+  const r=R; R=null;
+  const answered=r.right+r.wrong;
+  if(!answered){ goHome(); return; }
+  const before=levelOf(S.xp);
+  touchStreak(); S.xp+=r.xp; S.totals.rounds++;
+  let newBest=false; if(r.mode==="blitz" && r.right>S.blitzBest){ S.blitzBest=r.right; newBest=true; }
+  const after=levelOf(S.xp);
+  // stickers
+  const mastered=Object.values(S.words).filter(x=>x.b>=3).length;
+  const cond={first:true,perfect:r.mode!=="blitz"&&r.wrong===0&&r.right>=10,combo10:r.maxCombo>=10,typed25:S.totals.typed>=25,sent10:S.totals.sent>=10,
+    blitz12:r.mode==="blitz"&&r.right>=12,blitz20:r.mode==="blitz"&&r.right>=20,streak3:S.streak>=3,streak7:S.streak>=7,words50:mastered>=50,words150:mastered>=150,
+    page3:PAGES.some(p=>pageStars(p)===3),lvl4:after>=4,night:new Date().getHours()>=20,bigben:r.pages.size>=8};
+  const fresh=STK.filter(s=>cond[s.id]&&!S.stickers.includes(s.id)); fresh.forEach(s=>S.stickers.push(s.id));
+  save();
+  const firstShare = r.mode==="blitz" ? Math.min(1,r.right/15) : r.firstTry.size/Math.max(1,new Set([...r.firstTry,...r.missed.keys()]).size);
+  const stars = firstShare>=.95?3:firstShare>=.7?2:firstShare>=.4?1:0;
+  const title = r.mode==="blitz" ? (newBest?"Neuer Rekord!":"Zeit um!") : stars===3?"Fantastic!":stars===2?"Great job!":stars===1?"Gut gemacht!":"Weiter üben!";
+  const line = r.mode==="blitz" ? `Du hast ${r.right} Wörter in 60 Sekunden geschafft.` : stars>=2?"Das sitzt schon richtig gut.":"Jede Runde macht dich besser. Probier die Fehler-Wörter gleich nochmal!";
+  const missed=[...r.missed.values()];
+  $("#result").innerHTML=`<div class="result">
+    <svg class="fox big ${stars>=1?"happy":"sad"}" viewBox="0 0 100 100">${foxSVG()}</svg>
+    <h2><span class="mark">${title}</span></h2><div class="muted">${line}</div>
+    <div class="bigstars">${[0,1,2].map(i=>STAR(i<stars).replace("<svg",`<svg class="${i<stars?"on":""}"`)).join("")}</div>
+    <div class="rgrid"><div class="stat"><b>+${r.xp}</b><small>Punkte</small></div><div class="stat"><b>${r.right}</b><small>richtig</small></div><div class="stat"><b>${r.maxCombo}</b><small>beste Serie</small></div></div>
+    ${after>before?`<div class="newstk">🎉 Level ${after}: ${LEVELS[Math.min(after-1,LEVELS.length-1)]}!</div>`:""}
+    ${fresh.map(s=>`<div class="newstk">Neuer Sticker: ${s.e} ${esc(s.n)}</div>`).join("")}
+    ${missed.length?`<div class="misslist"><div class="label" style="border:0;padding-top:10px">Das üben wir nochmal</div>${missed.map(w=>`<div><span>${esc(w.de)}</span><b>${esc(clean(w.en))}</b></div>`).join("")}</div>`:""}
+    <div class="btnrow" style="width:100%">
+      ${missed.length&&r.mode!=="blitz"?`<button class="btn hl wide" id="again">Fehler nochmal üben (${missed.length})</button>`:""}
+      <button class="btn" id="home2">Zur Übersicht</button><button class="btn go" id="replay">Neue Runde</button></div>
+  </div>`;
+  $("#play").hidden=true; $("#result").hidden=false; scrollTo(0,0);
+  if(stars>=2||newBest||fresh.length) { confetti(stars===3||newBest?180:100); SND.win(); }
+  $("#home2").onclick=goHome; $("#replay").onclick=()=>start(r.mode);
+  if($("#again")) $("#again").onclick=()=>{ R={mode:r.mode,queue:shuffle(missed.slice()),total:missed.length,done:0,right:0,wrong:0,combo:0,maxCombo:0,xp:0,missed:new Map(),retried:new Set(),firstTry:new Set(),time:60,pages:new Set(missed.map(w=>w.page))};
+    $("#result").hidden=true; $("#play").hidden=false; updateBar(); next(); };
+}
+function goHome(){ R=null; $("#play").hidden=true; $("#result").hidden=true; $("#home").hidden=false; renderHome(); scrollTo(0,0);
+  $("#greet").textContent=GREET[Math.random()*GREET.length|0]; foxMood($("#fox-home"),"happy"); }
+$("#quitBtn").onclick=()=>{ if(!R) return goHome(); if(R.right+R.wrong>0) finish(); else goHome(); };
+
+/* ---------- add pages ---------- */
+const PROMPT=`Du bekommst das Foto einer Vokabelseite aus einem Englisch-Schulbuch (5. Klasse, Deutschland).
+Schreibe alle Vokabeln der Seite ab. Ignoriere Handschrift, Kritzeleien, Lautschrift in eckigen Klammern, Bilder und Aufgabenstellungen.
+Antworte NUR mit Text in genau diesem Format, ohne Erklärungen und ohne Markdown:
+# <Seitenzahl> | <Überschrift oder Thema der Seite>
+## <Abschnitt, z. B. die Kastenüberschrift oder "Wörterliste">
+<englisch> | <deutsch> | <englischer Beispielsatz> | <deutsche Übersetzung des Beispielsatzes> | <kurzer Hinweis>
+Regeln:
+- Eine Vokabel pro Zeile. Mehrere deutsche Bedeutungen mit "; " trennen.
+- Den Beispielsatz genau wie im Buch abschreiben und selbst kindgerecht ins Deutsche übersetzen.
+- Fehlt ein Beispielsatz oder Hinweis, die Felder weglassen. Das Zeichen | nie innerhalb eines Feldes verwenden.
+- Auslassungspunkte als … schreiben. Keine Lautschrift.
+- Ist keine Seitenzahl lesbar, schreibe ?.
+Beispiel:
+# 172 | Welcome to London!
+## Welcome to London!
+to hear | hören | Hello, can you hear me? | Hallo, kannst du mich hören?
+on | auf; an; am; in; im | I can see you on the boat. | Ich kann dich auf dem Boot sehen.
+bike | Fahrrad | | | Das e am Wortende ist meist stumm.`;
+let SAMPLE=null;
+async function initSample(){
+  try{ if(!window.claude||!window.claude.use) return; const sm=await claude.use("sample"); if(!sm) return;
+    const lim=await sm.limits().catch(()=>null); if(!lim||!lim.images) return;
+    SAMPLE=sm; $("#photoIn").accept=lim.images.mediaTypes.join(","); showPhotoBox();
+  }catch(e){}
+}
+function showPhotoBox(){ $("#photoBox").hidden=!SAMPLE; $("#noPhoto").hidden=!!SAMPLE; }
+async function shrink(file){ try{ const bmp=await createImageBitmap(file); const sc=Math.min(1,1800/Math.max(bmp.width,bmp.height));
+  const c=document.createElement("canvas"); c.width=Math.round(bmp.width*sc); c.height=Math.round(bmp.height*sc); c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+  return await new Promise(r=>c.toBlob(b=>r(b||file),"image/jpeg",.85)); }catch(e){ return file; } }
+function addSummary(){
+  const pages=parsePages($("#addText").value,()=>0); const cnt=p=>p.secs.reduce((x,s)=>x+s.items.length,0);
+  $("#addSum").innerHTML=pages.map(p=>`Seite <b>${esc(p.n)}</b> „${esc(p.title)}“: <b>${cnt(p)}</b> ${cnt(p)===1?"Vokabel":"Vokabeln"}, davon ${p.secs.reduce((x,s)=>x+s.items.filter(w=>w.ex).length,0)} mit Beispielsatz`).join("<br>");
+  $("#addSave").disabled=!pages.length; return pages;
+}
+function closeAdd(){ $("#addPanel").hidden=true; $("#addOpen").hidden=false; $("#addText").value=""; $("#addStatus").textContent=""; }
+$("#addOpen").onclick=()=>{ $("#addPanel").hidden=false; $("#addOpen").hidden=true; showPhotoBox(); addSummary(); $("#addPanel").scrollIntoView({behavior:"smooth",block:"start"}); };
+$("#addCancel").onclick=closeAdd;
+$("#addText").oninput=addSummary;
+$("#photoIn").onchange=async e=>{
+  const files=[...e.target.files]; e.target.value=""; if(!files.length||!SAMPLE) return;
+  const st=$("#addStatus"), ta=$("#addText");
+  for(let i=0;i<files.length;i++){
+    st.textContent=`Der Fuchs liest Foto ${i+1} von ${files.length} … das dauert etwa eine Minute.`;
+    try{
+      const img=await shrink(files[i]); const before=ta.value.trim(); const join=t=>(before?before+"\n\n":"")+t;
+      const res=await SAMPLE(PROMPT,{images:[img],onText:({text})=>{ ta.value=join(text); addSummary(); }});
+      ta.value=join(res.text.replace(/```[a-z]*\n?/g,"").trim()); addSummary();
+    }catch(err){
+      const c=err&&err.code;
+      st.textContent = c==="not_granted"?"Der Fuchs darf keine Fotos lesen. Erlaube den Zugriff und versuche es nochmal.":
+        c==="rate_limited"?"Gerade zu viele Anfragen. Warte kurz und versuche es nochmal.":
+        c==="image_rejected"?"Dieses Foto ließ sich nicht lesen. Probier ein anderes.":
+        "Das Auslesen hat nicht geklappt. Versuche es nochmal oder tippe die Vokabeln ein.";
+      return;
+    }
+  }
+  st.textContent="Fertig! Bitte kurz drüberschauen und Fehler direkt im Text verbessern.";
+};
+$("#addSave").onclick=()=>{
+  const raw=$("#addText").value; if(!addSummary().length){ toast("Keine Vokabeln gefunden."); return; }
+  // store one block per page
+  const blocks=[]; let cur=[];
+  raw.split("\n").forEach(l=>{ if(l.trim().startsWith("# ")&&cur.some(x=>x.trim())){ blocks.push(cur.join("\n")); cur=[]; } cur.push(l); });
+  blocks.push(cur.join("\n"));
+  let added=0;
+  blocks.forEach(b=>{ if(!parsePages(b,()=>0).length) return; const k="u"+Date.now().toString(36)+added;
+    S.custom.push({k,text:b.trim()}); S.sel.pages.push(k); added++; });
+  rebuildData(); save(); closeAdd(); renderHome(); confetti(80); SND.win();
+  toast(added===1?"Neue Seite gespeichert und angekreuzt!":added+" neue Seiten gespeichert!");
+};
+
+/* boot */
+$("#greet").textContent=GREET[Math.random()*GREET.length|0];
+renderHome(); renderFoot(); foxMood($("#fox-home"),"happy");
+function renderFoot(){ $("#foot").textContent=`${ALL.length} Vokabeln auf ${PAGES.length} Seiten`; }
+try{ speechSynthesis.getVoices(); }catch(e){}
+setTimeout(initCloud,0); setTimeout(initSample,0);
+</script>
+</body></html>
