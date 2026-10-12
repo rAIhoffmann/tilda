@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#2f9ec4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Schatzinsel">
+<meta name="description" content="Schatzsuche mit Eichi dem Eichhörnchen: 8 Rätsel für die 5. Klasse lösen und den Schatz finden.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-512.png">
+<title>Eichis Schatzinsel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+*{box-sizing:border-box}body{margin:0}[hidden]{display:none!important}
+html,body{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;overscroll-behavior:none}
+input{-webkit-user-select:text;user-select:text}
+/* Layout: full-screen canvas island + parchment modals for puzzles. Single deliberate daylight look. */
+:root{
+  --sea:#2f9ec4; --parch:#fbf3dc; --parch2:#f1e3bd; --ink:#3a2816; --ink2:#6b5235;
+  --leaf:#3f8f3a; --leaf-d:#2c6a28; --acorn:#c2692b; --gold:#e8b33a; --bad:#c2412b;
+  --f-display:"Grandstander","Comic Sans MS","Trebuchet MS",sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%;overflow:hidden;background:var(--sea);color:var(--ink);font-family:var(--f-body)}
+#game{position:fixed;inset:0;width:100%;height:100%;touch-action:none;display:block;cursor:pointer}
+.hud{position:fixed;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;pointer-events:none}
+.hud > *{pointer-events:auto}
+.brand{font-family:var(--f-display);font-weight:800;font-size:1.15rem;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.25);line-height:1.1}
+.brand small{display:block;font-family:var(--f-body);font-weight:700;font-size:.72rem;opacity:.9}
+.slots{display:flex;gap:4px;background:rgba(58,40,22,.55);padding:6px;border-radius:12px;flex-wrap:wrap;justify-content:center}
+.slot{width:26px;height:32px;border-radius:6px;border:2px dashed rgba(251,243,220,.55);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;color:var(--ink);font-size:1.05rem}
+.slot.on{background:var(--gold);border:2px solid #fff3c4;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.iconbtn{width:42px;height:42px;border-radius:50%;border:none;background:var(--parch);color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:1.2rem;box-shadow:0 3px 0 rgba(0,0,0,.25);cursor:pointer}
+.hint{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 14px);background:rgba(58,40,22,.7);color:#fff;padding:8px 14px;border-radius:20px;font-weight:700;font-size:.85rem;pointer-events:none;max-width:calc(100% - 32px);text-align:center;transition:opacity .4s}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 60px);transform:translateX(-50%) translateY(20px);background:var(--parch);color:var(--ink);padding:12px 16px;border-radius:14px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;transition:.3s;max-width:min(420px,calc(100% - 32px));text-align:center;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.overlay{position:fixed;inset:0;background:rgba(20,40,30,.45);display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.modal{background:var(--parch);border-radius:20px;width:100%;max-width:520px;max-height:100%;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.35),inset 0 0 0 3px var(--parch2);animation:rise .3s ease}
+@keyframes rise{from{transform:translateY(30px);opacity:0}}
+.mhead{display:flex;align-items:center;gap:10px;padding:16px 18px 6px}
+.badge{width:38px;height:38px;flex:none;border-radius:10px;background:var(--acorn);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.mhead h2{margin:0;font-family:var(--f-display);font-weight:800;font-size:1.3rem;line-height:1.15;text-wrap:balance;flex:1;min-width:0}
+.chip{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--leaf-d);background:#dfeccf;padding:2px 8px;border-radius:999px;margin-bottom:2px}
+.x{border:none;background:transparent;font-size:1.6rem;line-height:1;color:var(--ink2);cursor:pointer;padding:4px 8px;border-radius:8px}
+.mbody{padding:6px 18px 10px;display:flex;flex-direction:column;gap:12px}
+.mfoot{padding:4px 18px 18px;display:flex;flex-direction:column;gap:10px}
+.qtext{margin:0;font-size:1.05rem;line-height:1.5}
+.qprog{display:flex;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--parch2);border:2px solid var(--ink2)}
+.dot.done{background:var(--leaf);border-color:var(--leaf)}
+.dot.cur{background:var(--gold)}
+.choices{display:grid;gap:8px}
+.choice,.btn{font-family:var(--f-body);font-weight:800;font-size:1rem;padding:12px 14px;border-radius:12px;border:2px solid var(--ink2);background:#fff;color:var(--ink);cursor:pointer;text-align:left;box-shadow:0 3px 0 var(--parch2)}
+.choice.right{background:#cfe8c4;border-color:var(--leaf)}
+.choice.wrong{background:#f6d4cc;border-color:var(--bad);opacity:.7}
+.btn{text-align:center}
+.btn.primary{background:var(--leaf);border-color:var(--leaf-d);color:#fff;box-shadow:0 3px 0 var(--leaf-d)}
+.btn.tip{background:var(--parch2);border-color:var(--gold);border-style:dashed}
+.btn.tip.nudge{animation:wig .6s ease 2}
+@keyframes wig{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ansrow{display:flex;gap:8px;flex-wrap:wrap}
+.ansrow input{flex:1;min-width:120px;font:800 1.15rem var(--f-body);padding:10px 12px;border-radius:12px;border:2px solid var(--ink2);background:#fff;color:var(--ink)}
+.feedback{min-height:1.4em;font-weight:800}
+.feedback.good{color:var(--leaf-d)} .feedback.bad{color:var(--bad)}
+.tipbox{background:#fff6d6;border:2px dashed var(--gold);border-radius:12px;padding:10px 12px;line-height:1.45}
+.tiles{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tiles span{width:34px;height:38px;border-radius:8px;background:var(--acorn);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:1.2rem;box-shadow:0 3px 0 #8a4519}
+canvas.pz{width:100%;max-width:330px;height:auto;align-self:center;border-radius:12px;border:3px solid var(--ink2);background:#fff;touch-action:none}
+.pzlabel{font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);align-self:center;margin-bottom:-6px}
+.pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,48px);gap:6px;align-self:center}
+.pad button{font-size:1.3rem;border-radius:12px;border:2px solid var(--ink2);background:#fff;color:var(--ink);cursor:pointer;box-shadow:0 3px 0 var(--parch2)}
+.book{background:#fffdf5;border:2px solid var(--parch2);border-radius:6px 14px 14px 6px;padding:14px 16px;line-height:1.9;font-size:1.05rem;box-shadow:inset 6px 0 0 #e7d6ae}
+.w{cursor:pointer;border-radius:4px;padding:1px 1px}
+.w:hover{background:#fff1c2}
+.w.shake{animation:wig .35s}
+.w.fixed{cursor:default;background:#d9efcf}
+.w.fixed s{color:var(--bad)}
+.w.fixed b{color:var(--leaf-d)}
+.w.flash{background:#ffe08a}
+.counter{font-weight:800;color:var(--ink2)}
+.win{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:8px 0}
+.bigtile{width:84px;height:96px;border-radius:16px;background:var(--gold);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:3rem;color:var(--ink);box-shadow:0 6px 0 #b8861d;animation:pop .6s ease}
+.small{font-size:.9rem;color:var(--ink2);margin:0}
+.story p{margin:0 0 10px;line-height:1.55;font-size:1.02rem}
+.word{font-family:var(--f-display);font-weight:800;letter-spacing:.12em;font-size:1.6rem;color:var(--acorn)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:480px){.brand{font-size:1rem}.slot{width:22px;height:28px;font-size:.95rem}.slots{gap:3px;padding:5px}}
+</style>
+</head>
+<body>
+<canvas id="game" aria-label="Schatzinsel-Karte"></canvas>
+<div class="hud">
+  <div class="brand">Eichis Schatzinsel<small id="count">0 von 8 Stationen</small></div>
+  <div class="slots" id="slots" aria-label="Lösungswort"></div>
+  <button class="iconbtn" id="menuBtn" aria-label="Hilfe und Menü">?</button>
+</div>
+<div class="hint" id="hint">Tippe auf die Insel, damit Eichi dorthin läuft</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(()=>{
+// ---------- Grunddaten ----------
+const W=1600,H=1200,CX=800,CY=600,RX=700,RY=520;
+const WORD="NUSSBAUM";
+const shape=t=>1+0.07*Math.sin(3*t+1)+0.05*Math.sin(5*t+2.2)+0.03*Math.sin(9*t+0.5);
+const islandD=(x,y)=>{const dx=(x-CX)/RX,dy=(y-CY)/RY;return Math.hypot(dx,dy)/shape(Math.atan2(dy,dx));};
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+const rnd=mulberry(11);
+const START={x:800,y:960};
+const TREE_POS={x:820,y:570};
+const stations=[
+ {id:0,x:560,y:900,title:"Nüsse zählen",subject:"Mathematik"},
+ {id:1,x:330,y:700,title:"Die Grammatik-Brücke",subject:"Englisch"},
+ {id:2,x:330,y:440,title:"Das Dornen-Labyrinth",subject:"Labyrinth"},
+ {id:3,x:560,y:270,title:"Das verflixte Bild",subject:"Fehlersuchbild"},
+ {id:4,x:900,y:240,title:"Das alte Eulenbuch",subject:"Deutsch"},
+ {id:5,x:1160,y:330,title:"Der Römerstein",subject:"Mathematik"},
+ {id:6,x:1290,y:590,title:"Die Tierwiese",subject:"Biologie"},
+ {id:7,x:1150,y:870,title:"Buchstabensalat",subject:"Englisch"}
+];
+
+// ---------- Zustand ----------
+let state={solved:[],started:false,treasure:false};
+try{const s=JSON.parse(localStorage.getItem("eichi-schatz")||"null");if(s&&Array.isArray(s.solved))state=s;}catch(e){}
+const save=()=>{try{localStorage.setItem("eichi-schatz",JSON.stringify(state));}catch(e){}};
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+const isSolved=id=>state.solved.includes(id);
+const allDone=()=>state.solved.length===8;
+
+// ---------- Inselboden vorzeichnen ----------
+const ground=document.createElement("canvas");ground.width=W;ground.height=H;
+const g=ground.getContext("2d");
+function islandPath(c,k){c.beginPath();for(let i=0;i<=240;i++){const t=i/240*Math.PI*2,r=shape(t)*k;const x=CX+Math.cos(t)*RX*r,y=CY+Math.sin(t)*RY*r;i?c.lineTo(x,y):c.moveTo(x,y);}c.closePath();}
+const pathPts=[START,...stations,START];
+(function paintGround(){
+  g.fillStyle="#2f9ec4";g.fillRect(0,0,W,H);
+  islandPath(g,1.08);g.fillStyle="#56b7d6";g.fill();
+  islandPath(g,1.0);g.fillStyle="#ecd59a";g.fill();
+  islandPath(g,0.94);g.fillStyle="#6fbf4e";g.fill();
+  g.save();islandPath(g,0.94);g.clip();
+  for(let i=0;i<900;i++){const x=rnd()*W,y=rnd()*H;g.fillStyle=rnd()<.5?"rgba(40,110,30,.18)":"rgba(170,220,110,.22)";g.beginPath();g.ellipse(x,y,6+rnd()*22,4+rnd()*12,rnd()*3,0,7);g.fill();}
+  // Wege
+  const drawPath=(pts,w,col)=>{g.strokeStyle=col;g.lineWidth=w;g.lineCap="round";g.lineJoin="round";g.beginPath();g.moveTo(pts[0].x,pts[0].y);
+    for(let i=1;i<pts.length-1;i++){const mx=(pts[i].x+pts[i+1].x)/2,my=(pts[i].y+pts[i+1].y)/2;g.quadraticCurveTo(pts[i].x,pts[i].y,mx,my);}g.lineTo(pts[pts.length-1].x,pts[pts.length-1].y);g.stroke();};
+  drawPath(pathPts,34,"#b9925a");drawPath(pathPts,24,"#d9b77c");
+  drawPath([START,{x:800,y:800},TREE_POS],30,"#b9925a");drawPath([START,{x:800,y:800},TREE_POS],20,"#d9b77c");
+  for(let i=0;i<260;i++){const x=rnd()*W,y=rnd()*H;if(islandD(x,y)>0.9)continue;const col=["#fff","#ffd84a","#f07aa8","#b79cf2"][i%4];g.fillStyle=col;for(let p=0;p<5;p++){const a=p/5*6.28;g.beginPath();g.arc(x+Math.cos(a)*3,y+Math.sin(a)*3,2.4,0,7);g.fill();}g.fillStyle="#f6a623";g.beginPath();g.arc(x,y,1.8,0,7);g.fill();}
+  g.restore();
+  for(let i=0;i<40;i++){const t=rnd()*6.28,r=shape(t)*(0.95+rnd()*0.04);const x=CX+Math.cos(t)*RX*r,y=CY+Math.sin(t)*RY*r;g.fillStyle="#a39a8c";g.beginPath();g.ellipse(x,y,6+rnd()*8,4+rnd()*5,0,0,7);g.fill();}
+})();
+
+// ---------- Bäume ----------
+const trees=[];
+const segDist=(p,a,b)=>{const vx=b.x-a.x,vy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*vx+(p.y-a.y)*vy)/(vx*vx+vy*vy)));return Math.hypot(p.x-a.x-vx*t,p.y-a.y-vy*t);};
+const segs=[];for(let i=0;i<pathPts.length-1;i++)segs.push([pathPts[i],pathPts[i+1]]);segs.push([START,TREE_POS]);
+for(let i=0;i<900&&trees.length<130;i++){
+  const p={x:rnd()*W,y:rnd()*H};if(islandD(p.x,p.y)>0.88)continue;
+  if([...stations,START].some(s=>Math.hypot(s.x-p.x,s.y-p.y)<80))continue;
+  if(Math.hypot(TREE_POS.x-p.x,TREE_POS.y-p.y)<120)continue;
+  if(segs.some(([a,b])=>segDist(p,a,b)<42))continue;
+  if(trees.some(t=>Math.hypot(t.x-p.x,t.y-p.y)<44))continue;
+  trees.push({x:p.x,y:p.y,s:22+rnd()*14,k:rnd()<.3?1:0,h:95+rnd()*30,type:"tree"});
+}
+
+// ---------- Canvas & Kamera ----------
+const cv=document.getElementById("game"),c=cv.getContext("2d");
+let dpr=1,vw=0,vh=0,scale=1,cam={x:0,y:0};
+function resize(){dpr=Math.min(2,window.devicePixelRatio||1);vw=innerWidth;vh=innerHeight;cv.width=vw*dpr;cv.height=vh*dpr;
+  scale=Math.max(0.6,Math.min(1.15,Math.max(vw/900,vh/1100)));}
+addEventListener("resize",resize);resize();
+
+const sq={x:START.x,y:START.y,face:1,moving:false,target:null};
+if(state.pos&&typeof state.pos.x==="number"&&islandD(state.pos.x,state.pos.y)<0.96){sq.x=state.pos.x;sq.y=state.pos.y;sq.face=state.pos.f||1;}
+let lastSave=0;
+const savePos=()=>{state.pos={x:Math.round(sq.x),y:Math.round(sq.y),f:sq.face};save();};
+addEventListener("pagehide",savePos);document.addEventListener("visibilitychange",()=>{if(document.hidden)savePos();});
+const keys={};
+let modalOpen=false,lastT=performance.now(),time=0,tapMark=null;
+
+cv.addEventListener("pointerdown",e=>{if(modalOpen)return;const wx=cam.x+e.clientX/scale,wy=cam.y+e.clientY/scale;sq.target={x:wx,y:wy};tapMark={x:wx,y:wy,t:time};hideHint();});
+addEventListener("keydown",e=>{if(modalOpen)return;const k=e.key;if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(k)){keys[k]=true;sq.target=null;hideHint();e.preventDefault();}});
+addEventListener("keyup",e=>{keys[e.key]=false;});
+let hintHidden=false;function hideHint(){if(!hintHidden){hintHidden=true;document.getElementById("hint").style.opacity=0;}}
+
+const walkable=(x,y)=>islandD(x,y)<0.96;
+
+// ---------- Zeichnen ----------
+function ell(x,y,rx,ry,col){c.fillStyle=col;c.beginPath();c.ellipse(x,y,rx,ry,0,0,7);c.fill();}
+function circ(x,y,r,col){c.fillStyle=col;c.beginPath();c.arc(x,y,r,0,7);c.fill();}
+function drawTree(t){const {x,y,s,k,h}=t;ell(x+4,y+2,s*.9,s*.32,"rgba(20,60,20,.25)");
+  if(k===0){c.fillStyle="#7a4f2a";c.fillRect(x-s*.13,y-s*.95,s*.26,s*.95);
+    circ(x,y-s*1.25,s*.78,`hsl(${h},45%,30%)`);circ(x-s*.38,y-s*1.4,s*.52,`hsl(${h},45%,38%)`);circ(x+s*.32,y-s*1.5,s*.56,`hsl(${h},46%,40%)`);circ(x-s*.12,y-s*1.72,s*.38,`hsl(${h},50%,50%)`);}
+  else{c.fillStyle="#6b4423";c.fillRect(x-s*.1,y-s*.5,s*.2,s*.5);
+    for(let i=0;i<3;i++){c.fillStyle=`hsl(${h+20},40%,${24+i*6}%)`;const by=y-s*.4-i*s*.55,w=s*(.85-i*.18);c.beginPath();c.moveTo(x-w,by);c.lineTo(x+w,by);c.lineTo(x,by-s*.95);c.closePath();c.fill();}}}
+function drawBigTree(){const x=TREE_POS.x,y=TREE_POS.y,s=62;ell(x+6,y+4,s*1.1,s*.38,"rgba(20,60,20,.3)");
+  c.fillStyle="#6e4524";c.beginPath();c.moveTo(x-14,y);c.lineTo(x-9,y-s*1.0);c.lineTo(x+9,y-s*1.0);c.lineTo(x+14,y);c.closePath();c.fill();
+  circ(x,y-s*1.3,s*.85,"#2f6e2a");circ(x-s*.5,y-s*1.45,s*.6,"#3a8233");circ(x+s*.48,y-s*1.5,s*.62,"#3c8836");circ(x,y-s*1.85,s*.55,"#479a3d");circ(x-s*.15,y-s*2.0,s*.3,"#5cb04f");
+  const nuts=[[-30,-80],[25,-95],[-8,-120],[40,-70],[-45,-105],[10,-60]];nuts.forEach(([a,b])=>{circ(x+a,y+b,5,"#8a5a2b");circ(x+a-1,y+b-2,2,"#b68250");});
+  if(allDone()){const gl=0.5+0.5*Math.sin(time*4);c.save();c.globalAlpha=.35+.35*gl;circ(x+38,y+4,30,"#fff3a0");c.restore();drawChest(x+38,y+6,state.treasure);}
+  else{c.fillStyle="#6b4423";c.fillRect(x+30,y-26,5,28);c.fillStyle="#d9a35b";c.fillRect(x+18,y-42,30,22);c.strokeStyle="#6b4423";c.lineWidth=2;c.strokeRect(x+18,y-42,30,22);c.fillStyle="#3a2816";c.font="800 16px Grandstander, sans-serif";c.textAlign="center";c.textBaseline="middle";c.fillText("?",x+33,y-30);}}
+function drawChest(x,y,open){ell(x,y+2,22,6,"rgba(0,0,0,.25)");c.fillStyle="#8a4f22";c.fillRect(x-20,y-18,40,20);c.fillStyle="#e8b33a";c.fillRect(x-20,y-10,40,3);c.fillRect(x-3,y-18,6,20);
+  if(open){c.fillStyle="#f6d24a";circ(x-8,y-20,5,"#f6d24a");circ(x+6,y-21,5,"#ffe27a");circ(x,y-24,5,"#f2c230");c.fillStyle="#6e3d18";c.fillRect(x-20,y-34,40,10);}
+  else{c.fillStyle="#9b5a28";c.beginPath();c.moveTo(x-20,y-18);c.quadraticCurveTo(x,y-34,x+20,y-18);c.closePath();c.fill();c.fillStyle="#e8b33a";c.fillRect(x-3,y-27,6,9);}}
+function drawStation(s){const x=s.x,y=s.y,done=isSolved(s.id);
+  if(!done){const a=.45+.35*Math.sin(time*3+s.id);c.strokeStyle=`rgba(255,222,90,${a})`;c.lineWidth=5;c.beginPath();c.ellipse(x,y,32,13,0,0,7);c.stroke();}
+  ell(x+3,y+2,14,5,"rgba(0,0,0,.25)");c.fillStyle="#6b4423";c.fillRect(x-3,y-40,6,40);
+  c.fillStyle=done?"#bfe0a6":"#e2ad62";c.strokeStyle="#6b4423";c.lineWidth=2.5;c.beginPath();c.roundRect(x-22,y-66,44,30,6);c.fill();c.stroke();
+  c.fillStyle="#3a2816";c.font="800 19px Grandstander, sans-serif";c.textAlign="center";c.textBaseline="middle";
+  c.fillText(done?WORD[s.id]:String(s.id+1),x,y-50);
+  if(done){c.fillStyle="#3f8f3a";c.beginPath();c.moveTo(x+3,y-66);c.lineTo(x+3,y-90);c.lineTo(x+24,y-82);c.lineTo(x+3,y-74);c.fill();c.fillStyle="#6b4423";c.fillRect(x+1,y-92,3,28);}}
+function drawSquirrel(){const bob=sq.moving?-Math.abs(Math.sin(time*13))*6:0;const x=sq.x,y=sq.y;
+  ell(x,y+2,16,5,"rgba(0,0,0,.25)");
+  c.save();c.translate(x,y-10+bob);c.scale(sq.face*1.25,1.25);
+  // Schwanz
+  const sw=Math.sin(time*(sq.moving?10:3))*2;
+  c.fillStyle="#b4541f";c.beginPath();c.moveTo(-6,6);c.bezierCurveTo(-30,8,-36+sw,-22,-20+sw,-36);c.bezierCurveTo(-8,-46,4,-34,-6,-26);c.bezierCurveTo(-14,-18,-16,-6,-4,-2);c.closePath();c.fill();
+  c.fillStyle="#d9773a";c.beginPath();c.moveTo(-8,2);c.bezierCurveTo(-24,2,-28+sw,-20,-18+sw,-30);c.bezierCurveTo(-10,-36,-4,-30,-9,-24);c.bezierCurveTo(-14,-16,-14,-6,-6,-3);c.closePath();c.fill();
+  // Körper
+  ell(2,0,12,10,"#c0612a");ell(6,3,6,6,"#f3d6aa");
+  ell(-4,9,5,3,"#a44d1d");ell(9,9,4,3,"#a44d1d");
+  circ(12,-10,8.5,"#c86a30");ell(17,-7,4.5,3.5,"#f3d6aa");
+  c.fillStyle="#c0612a";c.beginPath();c.moveTo(8,-16);c.lineTo(10,-26);c.lineTo(14,-16);c.fill();c.fillStyle="#7a3612";c.beginPath();c.moveTo(9.5,-17);c.lineTo(10.4,-23);c.lineTo(12.5,-17);c.fill();
+  circ(15,-12,2,"#1d1208");circ(15.6,-12.6,.7,"#fff");circ(21,-8,1.4,"#3a1d0c");
+  // Nuss in den Pfoten
+  ell(13,1,3.2,2.6,"#8a5a2b");
+  c.restore();}
+
+function frame(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;time+=dt;
+  // Bewegung
+  let dx=0,dy=0;
+  if(keys.ArrowLeft||keys.a)dx-=1;if(keys.ArrowRight||keys.d)dx+=1;if(keys.ArrowUp||keys.w)dy-=1;if(keys.ArrowDown||keys.s)dy+=1;
+  if(!dx&&!dy&&sq.target){const tx=sq.target.x-sq.x,ty=sq.target.y-sq.y,d=Math.hypot(tx,ty);if(d<4)sq.target=null;else{dx=tx/d;dy=ty/d;}}
+  sq.moving=false;
+  if((dx||dy)&&!modalOpen){const l=Math.hypot(dx,dy),sp=230*dt;dx=dx/l*sp;dy=dy/l*sp;
+    if(walkable(sq.x+dx,sq.y+dy)){sq.x+=dx;sq.y+=dy;sq.moving=true;}
+    else if(walkable(sq.x+dx,sq.y)){sq.x+=dx;sq.moving=true;}
+    else if(walkable(sq.x,sq.y+dy)){sq.y+=dy;sq.moving=true;}
+    else sq.target=null;
+    if(Math.abs(dx)>0.05)sq.face=dx>0?1:-1;}
+  checkProximity();
+  if(sq.moving&&time-lastSave>2){lastSave=time;savePos();}
+  // Kamera
+  const viewW=vw/scale,viewH=vh/scale;
+  cam.x=viewW>=W?(W-viewW)/2:Math.max(0,Math.min(W-viewW,sq.x-viewW/2));
+  cam.y=viewH>=H?(H-viewH)/2:Math.max(0,Math.min(H-viewH,sq.y-viewH/2));
+  c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle="#2f9ec4";c.fillRect(0,0,vw,vh);
+  c.setTransform(dpr*scale,0,0,dpr*scale,-cam.x*dpr*scale,-cam.y*dpr*scale);
+  c.drawImage(ground,0,0);
+  // Wellen
+  c.save();c.globalAlpha=.35+.2*Math.sin(time*1.6);c.strokeStyle="#fff";c.lineWidth=3;c.setLineDash([18,14]);c.lineDashOffset=-time*12;islandPath(c,1.03+.008*Math.sin(time*1.6));c.stroke();c.restore();
+  if(tapMark&&time-tapMark.t<.6){const k=(time-tapMark.t)/.6;c.strokeStyle=`rgba(255,255,255,${1-k})`;c.lineWidth=3;c.beginPath();c.ellipse(tapMark.x,tapMark.y,8+k*16,4+k*7,0,0,7);c.stroke();}
+  // Objekte nach Tiefe sortiert
+  const objs=[];const vis=o=>o.x>cam.x-120&&o.x<cam.x+viewW+120&&o.y>cam.y-60&&o.y<cam.y+viewH+200;
+  trees.forEach(t=>vis(t)&&objs.push(t));stations.forEach(s=>vis(s)&&objs.push({...s,type:"st"}));
+  objs.push({x:TREE_POS.x,y:TREE_POS.y,type:"big"});objs.push({x:sq.x,y:sq.y,type:"sq"});
+  objs.sort((a,b)=>a.y-b.y);
+  objs.forEach(o=>{if(o.type==="tree")drawTree(o);else if(o.type==="st")drawStation(o);else if(o.type==="big")drawBigTree();else drawSquirrel();});
+  // Richtungspfeil zum nächsten Ziel
+  c.setTransform(dpr,0,0,dpr,0,0);
+  const next=stations.find(s=>!isSolved(s.id))||(state.treasure?null:{x:TREE_POS.x,y:TREE_POS.y});
+  if(next&&!modalOpen){const sx=(next.x-cam.x)*scale,sy=(next.y-cam.y)*scale,m=40;
+    if(sx<0||sx>vw||sy<0||sy>vh){const cx=vw/2,cy=vh/2,a=Math.atan2(sy-cy,sx-cx);
+      const ex=Math.max(m,Math.min(vw-m,sx)),ey=Math.max(m+60,Math.min(vh-m-40,sy));
+      c.save();c.translate(ex,ey);c.rotate(a);c.fillStyle="rgba(251,243,220,.92)";c.strokeStyle="#6b4423";c.lineWidth=2.5;c.beginPath();c.moveTo(16,0);c.lineTo(-10,-12);c.lineTo(-4,0);c.lineTo(-10,12);c.closePath();c.fill();c.stroke();c.restore();}}
+  drawConfetti(dt);
+  requestAnimationFrame(frame);}
+
+// ---------- Konfetti ----------
+let confetti=[];
+function burst(){for(let i=0;i<160;i++)confetti.push({x:vw/2,y:vh/2,vx:(Math.random()-.5)*700,vy:-Math.random()*700-150,r:Math.random()*6.28,c:["#e8b33a","#3f8f3a","#c2692b","#f07aa8","#5ab3e0"][i%5],l:3});}
+function drawConfetti(dt){confetti=confetti.filter(p=>p.l>0);confetti.forEach(p=>{p.vy+=900*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.r+=dt*8;p.l-=dt;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.fillRect(-5,-3,10,6);c.restore();});}
+
+// ---------- Nähe zu Stationen ----------
+const cooldown={};
+function checkProximity(){if(modalOpen)return;
+  for(const s of stations){const d=Math.hypot(sq.x-s.x,sq.y-s.y);
+    if(d>95)cooldown[s.id]=false;
+    if(d<46&&!isSolved(s.id)&&!cooldown[s.id]){sq.target=null;openStation(s);return;}}
+  const d=Math.hypot(sq.x-TREE_POS.x,sq.y-TREE_POS.y);
+  if(d>130)cooldown.big=false;
+  if(d<80&&!cooldown.big){cooldown.big=true;
+    if(allDone()){sq.target=null;openTreasure();}
+    else toast(`Unter dem großen Baum ist etwas vergraben! Löse erst alle 8 Stationen. Noch ${8-state.solved.length} übrig.`);}}
+
+let toastT;function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),3800);}
+
+// ---------- HUD ----------
+const slotsEl=document.getElementById("slots");
+function renderHud(){slotsEl.innerHTML="";for(let i=0;i<8;i++){const d=document.createElement("div");d.className="slot"+(isSolved(i)?" on":"");d.textContent=isSolved(i)?WORD[i]:"";slotsEl.append(d);}
+  document.getElementById("count").textContent=`${state.solved.length} von 8 Stationen`;}
+renderHud();
+
+// ---------- Modal ----------
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+function openModal({badge,chip,title,build,closable=true}){
+  modalOpen=true;for(const k in keys)keys[k]=false;
+  const ov=el("div","overlay"),m=el("div","modal");m.setAttribute("role","dialog");m.setAttribute("aria-modal","true");
+  const head=el("div","mhead");head.append(el("div","badge",badge));const tw=el("div");tw.style.flex="1";tw.style.minWidth="0";
+  if(chip)tw.append(el("div","chip",chip));const h=el("h2",null,title);h.style.margin="0";tw.append(h);head.append(tw);
+  const closers=[];
+  const close=()=>{closers.forEach(f=>f());ov.remove();modalOpen=false;};
+  if(closable){const x=el("button","x","×");x.type="button";x.setAttribute("aria-label","Schließen");x.onclick=close;head.append(x);}
+  const body=el("div","mbody"),foot=el("div","mfoot");
+  m.append(head,body,foot);ov.append(m);document.body.append(ov);
+  let tipBtn=null,tipBox=null;
+  const api={body,foot,close,onClose:f=>closers.push(f),
+    setTip(text,action){foot.innerHTML="";tipBox=null;if(!text)return;tipBtn=el("button","btn tip","Tipp anzeigen");tipBtn.type="button";
+      tipBtn.onclick=()=>{if(!tipBox){tipBox=el("div","tipbox",text);foot.prepend(tipBox);}if(action)action();};foot.append(tipBtn);},
+    nudgeTip(){if(tipBtn){tipBtn.classList.remove("nudge");void tipBtn.offsetWidth;tipBtn.classList.add("nudge");}}};
+  build(api);return api;}
+
+const PRAISE=["Richtig! Klasse!","Stark gemacht!","Genau so!","Super, das stimmt!","Prima!"];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+function openStation(s){
+  openModal({badge:String(s.id+1),chip:s.subject,title:s.title,build:api=>{
+    const done=()=>{if(!isSolved(s.id)){state.solved.push(s.id);save();renderHud();}
+      api.foot.innerHTML="";const b=api.body;b.innerHTML="";
+      const w=el("div","win");w.append(el("div","bigtile",WORD[s.id]));
+      if(allDone()){w.append(el("p","qtext",`Du hast alle Buchstaben! Das Lösungswort heißt:`),el("div","word",WORD),el("p","small","Der Schatz liegt unter dem großen Nussbaum in der Mitte der Insel. Lauf hin!"));}
+      else w.append(el("p","qtext",`Super gemacht! Du hast den Buchstaben <b>${WORD[s.id]}</b> gefunden.`),el("p","small",`${state.solved.length} von 8 Stationen geschafft.`));
+      const btn=el("button","btn primary","Weiter erkunden");btn.type="button";btn.onclick=()=>{api.close();if(allDone())toast("Folge dem Pfeil zum großen Nussbaum!");};w.append(btn);b.append(w);
+      if(allDone())burst();setTimeout(()=>btn.focus(),50);};
+    api.onClose(()=>{cooldown[s.id]=true;});
+    PUZZLES[s.id](api,done);}});}
+
+// ---------- Rätsel: Fragen-Baukasten ----------
+function quiz(questions){return(api,done)=>{let i=0;
+  const render=()=>{const q=questions[i];let wrong=0,locked=false;const b=api.body;b.innerHTML="";
+    if(questions.length>1){const p=el("div","qprog");questions.forEach((_,j)=>p.append(el("span","dot"+(j<i?" done":j===i?" cur":""))));b.append(p);}
+    b.append(el("p","qtext",q.q));const fb=el("div","feedback");fb.setAttribute("aria-live","polite");
+    const ok=()=>{locked=true;fb.className="feedback good";fb.textContent=pick(PRAISE);setTimeout(()=>{i++;i<questions.length?render():done();},1000);};
+    const bad=()=>{wrong++;fb.className="feedback bad";fb.textContent=wrong>=2?"Noch nicht. Schau dir mal den Tipp an!":"Noch nicht ganz. Versuch es nochmal!";if(wrong>=2)api.nudgeTip();};
+    if(q.type==="choice"){const gr=el("div","choices");q.options.forEach(o=>{const bt=el("button","choice");bt.type="button";bt.textContent=o;
+      bt.onclick=()=>{if(locked)return;if(o===q.answer){bt.classList.add("right");ok();}else{bt.classList.add("wrong");bt.disabled=true;bad();}};gr.append(bt);});b.append(gr);}
+    else{const f=el("form","ansrow");const inp=el("input");inp.id="ans-"+i;inp.autocomplete="off";inp.setAttribute("aria-label","Deine Antwort");
+      if(q.type==="number"){inp.inputMode="numeric";inp.placeholder="Zahl eingeben";}else{inp.placeholder="Wort eingeben";inp.autocapitalize="characters";inp.spellcheck=false;}
+      const bt=el("button","btn primary","Prüfen");bt.type="submit";f.append(inp,bt);
+      f.onsubmit=e=>{e.preventDefault();if(locked)return;const v=inp.value.trim();if(!v)return;
+        const right=q.type==="number"?parseInt(v.replace(/[\s.]/g,""),10)===q.answer:v.toUpperCase()===String(q.answer).toUpperCase();
+        right?ok():bad();if(!right)inp.select();};b.append(f);setTimeout(()=>inp.focus(),80);}
+    b.append(fb);api.setTip(q.tip);};render();};}
+const tiles=w=>`<span class="tiles">${[...w].map(ch=>`<span>${ch}</span>`).join("")}</span>`;
+
+// ---------- Rätsel: Labyrinth ----------
+function mazePuzzle(api,done){const N=9,b=api.body;
+  const cells=[];for(let y=0;y<N;y++){cells.push([]);for(let x=0;x<N;x++)cells[y].push({w:[1,1,1,1],v:0});}
+  const D=[[0,-1],[1,0],[0,1],[-1,0]];const st=[[0,0]];cells[0][0].v=1;
+  while(st.length){const [x,y]=st[st.length-1];const nb=[];D.forEach((d,i)=>{const nx=x+d[0],ny=y+d[1];if(nx>=0&&ny>=0&&nx<N&&ny<N&&!cells[ny][nx].v)nb.push([nx,ny,i]);});
+    if(!nb.length){st.pop();continue;}const [nx,ny,i]=nb[Math.floor(Math.random()*nb.length)];cells[y][x].w[i]=0;cells[ny][nx].w[(i+2)%4]=0;cells[ny][nx].v=1;st.push([nx,ny]);}
+  b.append(el("p","qtext","Hilf Eichi durch das Dornengestrüpp zur goldenen Eichel! Benutze die Pfeile, die Pfeiltasten oder wische über das Labyrinth."));
+  const S=300,cs=S/N,canvas=el("canvas","pz");const pr=Math.min(2,devicePixelRatio||1);canvas.width=S*pr;canvas.height=S*pr;b.append(canvas);
+  const m=canvas.getContext("2d");let p={x:0,y:0},showUntil=0,finished=false;
+  const solve=()=>{const prev={},q=[[p.x,p.y]],key=(x,y)=>x+","+y;prev[key(p.x,p.y)]=null;
+    while(q.length){const [x,y]=q.shift();if(x===N-1&&y===N-1)break;D.forEach((d,i)=>{if(cells[y][x].w[i])return;const nx=x+d[0],ny=y+d[1];if(!(key(nx,ny) in prev)){prev[key(nx,ny)]=[x,y];q.push([nx,ny]);}});}
+    const path=[];let cur=[N-1,N-1];while(cur){path.push(cur);cur=prev[key(cur[0],cur[1])];}return path;};
+  const draw=()=>{m.setTransform(pr,0,0,pr,0,0);m.fillStyle="#cfe9b8";m.fillRect(0,0,S,S);
+    if(performance.now()<showUntil){m.strokeStyle="rgba(232,179,58,.75)";m.lineWidth=cs*.35;m.lineCap="round";m.lineJoin="round";m.beginPath();solve().forEach(([x,y],i)=>{const px=x*cs+cs/2,py=y*cs+cs/2;i?m.lineTo(px,py):m.moveTo(px,py);});m.stroke();}
+    m.strokeStyle="#2c6a28";m.lineWidth=4;m.lineCap="round";
+    for(let y=0;y<N;y++)for(let x=0;x<N;x++){const w=cells[y][x].w,X=x*cs,Y=y*cs;m.beginPath();
+      if(w[0]){m.moveTo(X,Y);m.lineTo(X+cs,Y);}if(w[1]){m.moveTo(X+cs,Y);m.lineTo(X+cs,Y+cs);}if(w[2]){m.moveTo(X,Y+cs);m.lineTo(X+cs,Y+cs);}if(w[3]){m.moveTo(X,Y);m.lineTo(X,Y+cs);}m.stroke();}
+    const gx=(N-.5)*cs,gy=(N-.5)*cs;m.fillStyle="#e8b33a";m.beginPath();m.ellipse(gx,gy+2,cs*.24,cs*.28,0,0,7);m.fill();m.fillStyle="#7a4f2a";m.beginPath();m.ellipse(gx,gy-cs*.18,cs*.28,cs*.12,0,0,7);m.fill();
+    const px=p.x*cs+cs/2,py=p.y*cs+cs/2;m.fillStyle="#b4541f";m.beginPath();m.arc(px-cs*.2,py-cs*.12,cs*.2,0,7);m.fill();m.fillStyle="#c86a30";m.beginPath();m.arc(px+cs*.05,py+cs*.02,cs*.24,0,7);m.fill();m.fillStyle="#1d1208";m.beginPath();m.arc(px+cs*.13,py-cs*.05,cs*.05,0,7);m.fill();
+    if(performance.now()<showUntil)requestAnimationFrame(draw);};
+  const move=i=>{if(finished||cells[p.y][p.x].w[i])return;p={x:p.x+D[i][0],y:p.y+D[i][1]};draw();if(p.x===N-1&&p.y===N-1){finished=true;setTimeout(done,500);}};
+  const pad=el("div","pad");[["",-1],["↑",0],["",-1],["←",3],["↓",2],["→",1]].forEach(([t,i])=>{if(i<0){pad.append(el("span"));return;}const bt=el("button",null,t);bt.type="button";bt.setAttribute("aria-label",["hoch","rechts","runter","links"][i]);bt.onclick=()=>move(i);pad.append(bt);});b.append(pad);
+  const kh=e=>{const map={ArrowUp:0,ArrowRight:1,ArrowDown:2,ArrowLeft:3};if(e.key in map){e.preventDefault();move(map[e.key]);}};addEventListener("keydown",kh);api.onClose(()=>removeEventListener("keydown",kh));
+  let s0=null;canvas.addEventListener("pointerdown",e=>{s0={x:e.clientX,y:e.clientY};});
+  canvas.addEventListener("pointerup",e=>{if(!s0)return;const dx=e.clientX-s0.x,dy=e.clientY-s0.y;s0=null;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;move(Math.abs(dx)>Math.abs(dy)?(dx>0?1:3):(dy>0?2:0));});
+  draw();api.setTip("Ich zeige dir drei Sekunden lang den Weg in Gold. Merk ihn dir gut!",()=>{showUntil=performance.now()+3000;draw();});}
+
+// ---------- Rätsel: Fehlersuchbild ----------
+function diffPuzzle(api,done){const b=api.body;
+  const DIFFS=[{x:40,y:35,r:24},{x:232,y:40,r:28},{x:70,y:96,r:16},{x:211,y:155,r:20},{x:120,y:178,r:17}];const found=[];let flash=null;
+  b.append(el("p","qtext","Im unteren Bild hat jemand <b>5 Dinge</b> verändert. Tippe im unteren Bild auf jeden Unterschied!"));
+  const counter=el("div","counter","Gefunden: 0 von 5");
+  const mk=label=>{b.append(el("div","pzlabel",label));const cvs=el("canvas","pz");const pr=Math.min(2,devicePixelRatio||1);cvs.width=300*pr;cvs.height=200*pr;cvs.style.aspectRatio="3/2";b.append(cvs);return cvs;};
+  const A=mk("Original"),B=mk("Mit Fehlern");b.append(counter);
+  const scene=(cvs,v)=>{const pr=cvs.width/300,m=cvs.getContext("2d");m.setTransform(pr,0,0,pr,0,0);
+    const sky=m.createLinearGradient(0,0,0,130);sky.addColorStop(0,"#8fd0f0");sky.addColorStop(1,"#d8f0fa");m.fillStyle=sky;m.fillRect(0,0,300,130);m.fillStyle="#7cc35a";m.fillRect(0,128,300,72);
+    m.fillStyle="#ffd23a";m.beginPath();m.arc(40,35,14,0,7);m.fill();
+    if(v===0){m.strokeStyle="#ffc21a";m.lineWidth=3;for(let i=0;i<8;i++){const a=i/8*6.28;m.beginPath();m.moveTo(40+Math.cos(a)*18,35+Math.sin(a)*18);m.lineTo(40+Math.cos(a)*25,35+Math.sin(a)*25);m.stroke();}}
+    if(v===0){m.fillStyle="#fff";[[218,44,12],[232,36,15],[248,44,11]].forEach(([x,y,r])=>{m.beginPath();m.arc(x,y,r,0,7);m.fill();});}
+    m.strokeStyle="#333";m.lineWidth=2;m.beginPath();m.arc(144,36,6,3.6,5.8);m.stroke();m.beginPath();m.arc(156,36,6,3.6,5.8);m.stroke();
+    m.fillStyle="#7a4f2a";m.fillRect(63,108,14,62);m.fillStyle="#3f8f3a";m.beginPath();m.arc(70,88,33,0,7);m.fill();
+    m.fillStyle="#d8352a";[[54,78],[86,82],[70,96],[58,104],[88,104]].forEach(([x,y],i)=>{if(v===1&&i===2)return;m.beginPath();m.arc(x,y,5,0,7);m.fill();});
+    m.fillStyle="#f2d488";m.fillRect(180,110,70,60);m.fillStyle="#c2412b";m.beginPath();m.moveTo(172,112);m.lineTo(215,76);m.lineTo(258,112);m.closePath();m.fill();
+    m.fillStyle=v===0?"#7a4f2a":"#3b6fd1";m.fillRect(203,140,16,30);m.fillStyle="#9fd6f2";m.fillRect(228,122,15,15);m.strokeStyle="#6b4423";m.lineWidth=2;m.strokeRect(228,122,15,15);
+    [[100,"#ffd23a"],[120,v===0?"#e8433a":"#8e5ad8"],[142,"#fff"]].forEach(([x,col])=>{m.strokeStyle="#2c6a28";m.lineWidth=2;m.beginPath();m.moveTo(x,192);m.lineTo(x,178);m.stroke();m.fillStyle=col;for(let p=0;p<5;p++){const a=p/5*6.28;m.beginPath();m.arc(x+Math.cos(a)*4,176+Math.sin(a)*4,3.2,0,7);m.fill();}m.fillStyle="#f6a623";m.beginPath();m.arc(x,176,2.2,0,7);m.fill();});
+    m.lineWidth=3;found.forEach(i=>{const d=DIFFS[i];m.strokeStyle="#e8433a";m.beginPath();m.arc(d.x,d.y,d.r,0,7);m.stroke();});
+    if(flash&&performance.now()<flash.until){const d=DIFFS[flash.i];m.strokeStyle="rgba(232,179,58,.9)";m.setLineDash([5,4]);m.beginPath();m.arc(d.x,d.y,d.r+6,0,7);m.stroke();m.setLineDash([]);}};
+  const draw=()=>{scene(A,0);scene(B,1);if(flash&&performance.now()<flash.until)requestAnimationFrame(draw);};
+  const hit=e=>{const r=e.currentTarget.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*300,y=(e.clientY-r.top)/r.height*200;
+    const i=DIFFS.findIndex((d,j)=>!found.includes(j)&&Math.hypot(d.x-x,d.y-y)<d.r+6);
+    if(i>=0){found.push(i);counter.textContent=`Gefunden: ${found.length} von 5`;draw();if(found.length===5)setTimeout(done,700);}
+    else{counter.textContent=`Gefunden: ${found.length} von 5 · Da ist alles gleich. Schau genau hin!`;}};
+  A.addEventListener("pointerdown",hit);B.addEventListener("pointerdown",hit);draw();
+  api.setTip("Vergleiche Teil für Teil: Himmel, Baum, Haus und Blumen. Ich markiere dir eine Stelle kurz mit einem gelben Kreis.",()=>{const i=DIFFS.findIndex((_,j)=>!found.includes(j));if(i<0)return;flash={i,until:performance.now()+1800};draw();});}
+
+// ---------- Rätsel: Fehler im Buch ----------
+function bookPuzzle(api,done){const b=api.body;
+  const TEXT="Im Herbst sammelt das kleine Eichhörnchen Eichi viele Nüsse. Es springt fon Ast zu Ast und versteckt seine Vorräte in der Erde. Manchmal vergisst es aber, wo es die Nüsse vergraben hat. Dann wachsen im Frülling dort neue Bäume. Eichi ist sehr schlau, aber auch ein bisschen vergeslich. Am Abend kuschelt es sich in seinen Kobel und träumt von Haselnüßen.";
+  const ERR={"fon":"von","Frülling":"Frühling","vergeslich":"vergesslich","Haselnüßen":"Haselnüssen"};let found=0;
+  b.append(el("p","qtext","Im Buch der alten Eule haben sich <b>4 Rechtschreibfehler</b> versteckt. Tippe auf die falsch geschriebenen Wörter!"));
+  const book=el("div","book");const counter=el("div","counter","Gefunden: 0 von 4");const words=[];
+  TEXT.split(" ").forEach((tok,i)=>{const core=tok.replace(/[.,!?]/g,""),punct=tok.slice(core.length);const sp=el("span","w",core);sp.tabIndex=0;sp.setAttribute("role","button");
+    const act=()=>{if(sp.classList.contains("fixed"))return;
+      if(ERR[core]){sp.classList.add("fixed");sp.innerHTML=`<s>${core}</s> <b>${ERR[core]}</b>`;found++;counter.textContent=`Gefunden: ${found} von 4`;if(found===4)setTimeout(done,900);}
+      else{sp.classList.remove("shake");void sp.offsetWidth;sp.classList.add("shake");counter.textContent=`Gefunden: ${found} von 4 · „${core}“ ist richtig geschrieben.`;}};
+    sp.onclick=act;sp.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act();}};
+    words.push({sp,core});book.append(sp,document.createTextNode(punct+" "));});
+  b.append(book,counter);
+  api.setTip("Achte auf die Wörter mit <b>v/f</b>, mit <b>h</b> nach einem Vokal, auf <b>doppelte Buchstaben</b> und auf <b>ß oder ss</b>: Nach einem kurzen Vokal schreibt man ss. Ich lasse ein falsches Wort kurz aufleuchten.",
+    ()=>{const w=words.find(w=>ERR[w.core]&&!w.sp.classList.contains("fixed"));if(!w)return;w.sp.classList.add("flash");setTimeout(()=>w.sp.classList.remove("flash"),1500);});}
+
+// ---------- Schatz ----------
+function openTreasure(){
+  openModal({badge:"★",chip:"Lösungswort: NUSSBAUM",title:"Der Schatz!",build:api=>{
+    const b=api.body;const cvs=el("canvas","pz");const pr=Math.min(2,devicePixelRatio||1);cvs.width=300*pr;cvs.height=200*pr;cvs.style.aspectRatio="3/2";cvs.style.background="#5aa846";b.append(cvs);
+    const m=cvs.getContext("2d");let t0=performance.now(),run=true;api.onClose(()=>run=false);
+    const coins=Array.from({length:22},(_,i)=>({x:110+Math.random()*80,y:120,vx:(Math.random()-.5)*120,vy:-120-Math.random()*160,d:.5+Math.random()*1.2}));
+    const draw=now=>{if(!run)return;const t=(now-t0)/1000,open=Math.min(1,t/1.2);m.setTransform(pr,0,0,pr,0,0);
+      m.fillStyle="#5aa846";m.fillRect(0,0,300,200);m.fillStyle="#7a5530";m.beginPath();m.ellipse(150,165,110,26,0,0,7);m.fill();
+      m.fillStyle=`rgba(255,240,150,${.25+.2*Math.sin(t*4)*open})`;m.beginPath();m.arc(150,100,90*open,0,7);m.fill();
+      m.fillStyle="#8a4f22";m.fillRect(95,105,110,60);m.fillStyle="#e8b33a";m.fillRect(95,125,110,7);m.fillRect(144,105,12,60);
+      m.fillStyle="#f2c230";for(let i=0;i<9;i++){m.beginPath();m.arc(105+i*11,105,7,0,7);m.fill();}
+      if(open>.5)coins.forEach(c=>{const ct=Math.max(0,t-1.2*c.d);if(!ct)return;const k=ct%2.2;const x=c.x+c.vx*k,y=c.y+c.vy*k+200*k*k;if(y>200)return;m.fillStyle="#ffd84a";m.beginPath();m.ellipse(x,y,6*Math.abs(Math.cos(k*6))+1,6,0,0,7);m.fill();});
+      m.save();m.translate(150,105);m.scale(1,1-1.6*open);m.fillStyle="#9b5a28";m.beginPath();m.moveTo(-55,0);m.quadraticCurveTo(0,-40,55,0);m.closePath();m.fill();m.fillStyle="#e8b33a";m.fillRect(-6,-18,12,18);m.restore();
+      requestAnimationFrame(draw);};requestAnimationFrame(draw);
+    b.append(el("p","qtext","<b>Hurra, geschafft!</b> Eichi gräbt unter dem großen Nussbaum und findet eine Truhe voller Goldmünzen und die allergrößte Haselnuss der Insel."),
+      el("p","small","Du hast alle 8 Rätsel gelöst: Mathe, Englisch, Deutsch, Biologie, das Labyrinth und das Fehlersuchbild. Du bist eine echte Schatzsucherin!"));
+    const again=el("button","btn primary","Nochmal spielen");again.type="button";again.onclick=()=>{api.close();resetGame();};
+    const stay=el("button","btn","Weiter über die Insel spazieren");stay.type="button";stay.onclick=api.close;api.foot.append(again,stay);
+    if(!state.treasure){state.treasure=true;save();}burst();}});}
+
+function resetGame(){state={solved:[],started:true,treasure:false,pos:null};save();renderHud();sq.x=START.x;sq.y=START.y;sq.target=null;for(const k in cooldown)cooldown[k]=false;toast("Neues Spiel! Die Stationen warten auf dich.");}
+
+// ---------- Rätselinhalte ----------
+const PUZZLES=[
+ quiz([
+  {type:"number",q:"Eichi sammelt jeden Tag <b>12 Haselnüsse</b>. Nach wie vielen Tagen hat er genau <b>156 Nüsse</b>?",answer:13,tip:"Rechne 156 : 12. Kleiner Trick: 12 · 10 = 120. Wie viel fehlt dann noch bis 156, und wie oft passt 12 da hinein?"},
+  {type:"number",q:"Von den 156 Nüssen versteckt Eichi <b>ein Viertel</b> unter einer Baumwurzel. Wie viele Nüsse bleiben ihm übrig?",answer:117,tip:"Ein Viertel von 156 ist 156 : 4 = 39. Ziehe diese Zahl jetzt von 156 ab."},
+  {type:"number",q:"Ein Glas Nüsse kostet 3 Euro. Eichi kauft 7 Gläser und bezahlt mit einem 50-Euro-Schein. Wie viel Euro bekommt er zurück?",answer:29,tip:"Erst den Preis: 7 · 3 Euro. Dann rechnest du 50 minus diesen Betrag."}]),
+ quiz([
+  {type:"choice",q:"My best friend ___ a little brother.",options:["have","has","is having"],answer:"has",tip:"Bei he, she, it muss das <b>s</b> mit! „My best friend“ ist so etwas wie „he“ oder „she“."},
+  {type:"choice",q:"Look! The squirrel ___ up the tree.",options:["climbs","climb","is climbing"],answer:"is climbing",tip:"„Look!“ heißt: Das passiert <b>genau jetzt</b>. Dafür nimmst du das present progressive: am/is/are + -ing."},
+  {type:"choice",q:"There ___ three apples on the table.",options:["is","are","am"],answer:"are",tip:"Es sind <b>drei</b> Äpfel, also Mehrzahl. Bei der Mehrzahl heißt es „there are“."},
+  {type:"choice",q:"Was heißt „Insel“ auf Englisch?",options:["iceland","island","inside"],answer:"island",tip:"Das Wort hat ein stummes <b>s</b>, man spricht es wie „ai-lend“."}]),
+ mazePuzzle,
+ diffPuzzle,
+ bookPuzzle,
+ quiz([
+  {type:"number",q:"Auf einem alten Stein steht die römische Zahl <b>XLVII</b>. Welche Zahl ist das?",answer:47,tip:"X = 10, L = 50, V = 5, I = 1. Steht ein kleineres Zeichen <b>vor</b> einem größeren, wird es abgezogen: XL = 50 − 10 = 40."},
+  {type:"number",q:"Wie geht die Zahlenreihe weiter?<br><b>3 – 6 – 12 – 24 – ?</b>",answer:48,tip:"Schau, was von einer Zahl zur nächsten passiert. Wird immer gleich viel dazugezählt, oder wird verdoppelt?"},
+  {type:"choice",q:"Ist die Zahl <b>2026</b> durch 3 teilbar?",options:["Ja","Nein"],answer:"Nein",tip:"Bilde die Quersumme: 2 + 0 + 2 + 6. Ist sie durch 3 teilbar, ist es auch die Zahl."}]),
+ quiz([
+  {type:"choice",q:"Welches Tier ist <b>kein</b> Säugetier?",options:["Fledermaus","Delfin","Pinguin","Igel"],answer:"Pinguin",tip:"Säugetiere bringen lebende Junge zur Welt und säugen sie mit Milch. Eines dieser Tiere legt Eier und hat Federn."},
+  {type:"choice",q:"Was machen Eichhörnchen im Winter?",options:["Winterschlaf: Sie schlafen bis zum Frühling durch.","Winterruhe: Sie schlafen viel, wachen aber auf und fressen von ihren Vorräten.","Sie fliegen in den warmen Süden."],answer:"Winterruhe: Sie schlafen viel, wachen aber auf und fressen von ihren Vorräten.",tip:"Denk an Eichis vergrabene Nüsse. Wozu bräuchte er sie, wenn er den ganzen Winter durchschlafen würde?"},
+  {type:"choice",q:"Wie heißt das Nest eines Eichhörnchens?",options:["Bau","Horst","Kobel"],answer:"Kobel",tip:"Ein Horst gehört großen Vögeln wie dem Adler, ein Bau dem Fuchs oder Dachs. Das Wort stand auch im Eulenbuch."}]),
+ quiz([
+  {type:"text",q:"Bring die Buchstaben in die richtige Reihenfolge. Das englische Wort bedeutet <b>Baum</b>.<br>"+tiles("ETER"),answer:"TREE",tip:"Das Wort beginnt mit <b>T</b> und hat zwei E nebeneinander."},
+  {type:"text",q:"Dieses englische Wort bedeutet <b>Nuss</b>.<br>"+tiles("TUN"),answer:"NUT",tip:"Es beginnt mit <b>N</b>, der mittlere Buchstabe ist ein U."},
+  {type:"text",q:"Jetzt wird es knifflig! Das Wort bedeutet <b>Eichhörnchen</b>.<br>"+tiles("RLEQUISR"),answer:"SQUIRREL",tip:"Es beginnt mit <b>SQU</b>, in der Mitte steht <b>RR</b> und es endet auf <b>EL</b>."}])
+];
+
+// ---------- Intro & Menü ----------
+function intro(first){openModal({badge:"✦",chip:"Schatzsuche",title:first?"Eichi und die alte Karte":"Hilfe",closable:!first,build:api=>{
+  const s=el("div","story");
+  if(first)s.append(el("p",null,"Eichi, das Eichhörnchen, hat in einem hohlen Baum eine uralte Schatzkarte gefunden. Darauf steht: <i>„Wer alle acht Rätsel der grünen Insel löst, findet den Schatz.“</i>"));
+  s.append(el("p",null,"<b>So spielst du:</b> Tippe auf die Insel, dann läuft Eichi dorthin. Am Computer gehen auch die Pfeiltasten."),
+    el("p",null,"An jeder Station mit einem Holzschild wartet ein Rätsel. Für jedes gelöste Rätsel bekommst du einen Buchstaben. Zusammen ergeben sie das Lösungswort, das dir verrät, wo der Schatz liegt."),
+    el("p",null,"Dein Spielstand wird automatisch gespeichert. Du kannst jederzeit aufhören und später weiterspielen."),
+    el("p",null,"Wenn du nicht weiterkommst, drück auf <b>Tipp anzeigen</b>. Der Pfeil am Bildschirmrand zeigt dir den Weg zur nächsten Station."));
+  api.body.append(s);
+  const go=el("button","btn primary",first?"Los geht's!":"Weiterspielen");go.type="button";go.onclick=()=>{state.started=true;save();api.close();};api.foot.append(go);
+  if(!first){const r=el("button","btn","Spiel neu starten");r.type="button";let armed=false;
+    r.onclick=()=>{if(!armed){armed=true;r.textContent="Wirklich? Alle Buchstaben gehen verloren. Nochmal tippen zum Bestätigen";return;}api.close();resetGame();};api.foot.append(r);}
+  setTimeout(()=>go.focus(),50);}});}
+document.getElementById("menuBtn").onclick=()=>{if(!modalOpen)intro(false);};
+if(!state.started)intro(true);
+else if(state.solved.length&&!state.treasure)setTimeout(()=>toast(`Willkommen zurück! Du hast schon ${state.solved.length} von 8 Stationen geschafft.`),600);
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
