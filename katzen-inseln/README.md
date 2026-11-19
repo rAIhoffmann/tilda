@@ -17,6 +17,12 @@ Auf dem iPhone: In Safari öffnen → Teilen → **„Zum Home-Bildschirm“**. 
 | Bahngleise 🚂 | Wisch links/rechts = Gleis wechseln, hoch = springen, runter = ducken, Doppeltipp = Schutzschild |
 | Labyrinth 👹 | In eine Richtung wischen, Katze läuft bis zur nächsten Kreuzung |
 | Suchbild 🔍 | 15 Unterschiede antippen |
+| Ponyhof 🐴 | Pferd aussuchen, führen, putzen, satteln – dann Wald, Reithalle oder Reitplatz. Manchmal bist du die Reitlehrerin! |
+| Bibliothek 📚 | Buch aussuchen, in die Geschichte eintauchen und selbst entscheiden |
+| Sportplatz 🏃 | Wettrennen: abwechselnd Links/Rechts tippen |
+| Leichtathletik 🏅 | Hürdenlauf, Weitsprung, Hochsprung, Ballwurf |
+| Tierinsel 🦁 | Tiere besuchen und richtig füttern |
+| Verwandlungs-Insel 🪄 | Für 60 Sekunden Vogel, Delfin, Gepard oder Maus sein |
 
 Münzen gibt es überall. Im 🛒 Laden kann man bessere Segel kaufen, um ferne Inseln zu erreichen – bis zur Goldenen Insel 👑.
 
